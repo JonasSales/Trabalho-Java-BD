@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Formulário de Atualização</title>
+        <link rel="stylesheet" href="http://localhost:8080/style/configuracoesCRUD.css"/>
+    </head>
+
+    <body>
+
+        <form action="http://localhost:8080/AtualizarProdutoServlet" method="post">
+            <h2>Atualizar</h2>
+
+            <label>ID:</label>
+            <input type="number" id="id_produto" name="id_produto" required>
+
+            <label>Nome:</label>
+            <input type="text" id="nome" name="nome" maxlength="255" required>
+
+            <label>Categoria:</label>
+            <input type="text" id="categoria" name="categoria"
+                   required>
+
+            <label>Marca:</label>
+            <input type="text" id="marca" name="marca" maxlength="100"
+                   required>
+
+            <label>Publico:
+                <select  id="publico" name="publico">
+                <option value="Adulto">Adulto</option>
+                <option value="Infantil">Infantil</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Feminino">Feminino</option>
+                <option value ="Unissex">Unissex</option>
+            </select>
+            </label>
+            <input type="submit" value="Atualizar">
+        </form>
+    </body>
+</html>

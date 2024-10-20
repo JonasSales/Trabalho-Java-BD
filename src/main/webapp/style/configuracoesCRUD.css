@@ -1,0 +1,69 @@
+
+form {
+    background-color: #f4f4f4;
+    border-radius: 20px;
+    max-width: 100%;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    align-items: center;
+    border: 3px solid #ccc;
+    justify-content: center; /* Centraliza horizontalmente */
+    display: block;
+}
+form h2 {
+    display: flex;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center; /* Centraliza horizontalmente */
+}
+
+p{
+    text-align: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+label {
+    align-items: center;
+    display: block;
+    padding: 1%;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],    
+input[type="number"],    
+input[type="password"],
+input[type="date"] {
+    
+    border-radius: 10px;
+    width: 95%;
+    padding: 1%;
+    margin: 1px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+input[type="submit"] {
+    width: 97%;
+    padding: 8px;
+    margin: 10px;
+    background-color: #4CAF50;
+    align-items: center;
+    color: white;
+    border: none;
+    border-radius: 10px;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+iframe {
+    border: 0;
+    width: 80vh; /* Use 45% da largura disponível */
+    height: 80vh; /* Use 30% da altura disponível */
+    align-items: center;
+    position: fixed;
+}
