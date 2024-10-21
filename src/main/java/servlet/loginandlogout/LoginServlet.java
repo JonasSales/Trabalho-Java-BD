@@ -24,22 +24,36 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
-
         boolean login = false;
         Usuario a = UsuarioDAO.BuscarUsuarioPorEmail(email);
-        
         if (a.getEmail() != null && a.getSenha().equals(senha)) {
             login = true;
         }
         if(login){
             HttpSession session = request.getSession();
             session.setAttribute("usuario", a);
-            //session.setMaxInactiveInterval(60*10);
-            RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
-            rd.forward(request, response);
+            String admin = "admin";
+            String funcionario = "funcionario";
+            String vendedor = "vendedor";
+            String cliente = "cliente";
+            if (a.getTipodeUsuario().equals(admin)) {
+                RequestDispatcher rd = request.getRequestDispatcher("menuadmin/index.jsp");
+                rd.forward(request, response);
+            }
+            else if(a.getTipodeUsuario().equals(funcionario)){
+                RequestDispatcher rd = request.getRequestDispatcher("menufuncionario/index.jsp");
+                rd.forward(request, response);
+            }
+            else if(a.getTipodeUsuario().equals(vendedor)){
+                RequestDispatcher rd = request.getRequestDispatcher("menuvendedor/index.jsp");
+                rd.forward(request, response);
+            }
+            else if(a.getTipodeUsuario().equals(cliente)){
+                RequestDispatcher rd = request.getRequestDispatcher("menucliente/index.jsp");
+                rd.forward(request, response);
+            }
         }
         else{
             request.setAttribute("erro", "email/senha incorretos");

@@ -21,7 +21,7 @@ public class AtualizarFuncionarioServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("funcionarios/acessar/atualizar_funcionario.jsp").forward(request, response);
+        request.getRequestDispatcher("atualizar/atualizar_funcionario.jsp").forward(request, response);
     }
 
     @Override

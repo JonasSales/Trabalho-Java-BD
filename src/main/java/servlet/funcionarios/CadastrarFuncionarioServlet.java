@@ -21,7 +21,7 @@ public class CadastrarFuncionarioServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("funcionarios/acessar/adicionar_funcionario.jsp").forward(request, response);
+        request.getRequestDispatcher("adicionar/adicionar_funcionario.jsp").forward(request, response);
     }
 
     @Override

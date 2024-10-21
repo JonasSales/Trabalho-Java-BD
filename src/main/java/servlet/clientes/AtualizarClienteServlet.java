@@ -18,7 +18,7 @@ public class AtualizarClienteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("clientes/acessar/atualizar_cliente.jsp").forward(request, response);
+        request.getRequestDispatcher("atualizar/atualizar_cliente.jsp").forward(request, response);
     }
 
     @Override

@@ -19,7 +19,7 @@ public class DeletarProdutoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("produtos/acessar/deletar_produto.html").forward(request, response);
+        request.getRequestDispatcher("deletar/deletar_produto.jsp").forward(request, response);
     }
 
     @Override

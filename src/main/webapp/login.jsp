@@ -18,7 +18,7 @@
             <label>Senha:</label>
             <input type="password" id="senha" name="senha"
                    required>
-            <input type="submit" value="Adicionar">
+            <input type="submit" value="Entrar no sistema">
             <%if (erro != null) {
                     out.print(erro);
                 }

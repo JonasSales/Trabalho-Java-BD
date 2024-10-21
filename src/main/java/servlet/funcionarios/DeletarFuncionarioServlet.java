@@ -18,7 +18,7 @@ public class DeletarFuncionarioServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("funcionarios/acessar/deletar_funcionario.jsp").forward(request, response);
+        request.getRequestDispatcher("deletar/deletar_funcionario.jsp").forward(request, response);
     }
 
     @Override

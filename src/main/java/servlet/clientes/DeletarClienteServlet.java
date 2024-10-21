@@ -18,7 +18,7 @@ public class DeletarClienteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("clientes/acessar/deletar_cliente.jsp").forward(request, response);
+        request.getRequestDispatcher("deletar/deletar_cliente.jsp").forward(request, response);
     }
 
     @Override

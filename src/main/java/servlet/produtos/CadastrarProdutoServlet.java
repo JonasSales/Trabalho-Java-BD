@@ -19,7 +19,7 @@ public class CadastrarProdutoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("produtos/acessar/adicionar_produto.html").forward(request, response);
+        request.getRequestDispatcher("adicionar/adicionar_produto.jsp").forward(request, response);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class CadastrarProdutoServlet extends HttpServlet {
             out.println("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>");
             out.println("<script>");
             out.println("setTimeout(function() {");
-            out.println("window.location.href = localhost:8080/apresentacao.html"); // Substitua pela sua página principal
+            out.println("window.location.href = 'localhost:8080/apresentacao.html'"); // Substitua pela sua página principal
             out.println("}, 5000);"); // Redireciona após 5 segundos
             out.println("</script>");
             out.println("</head>");
@@ -66,7 +66,6 @@ public class CadastrarProdutoServlet extends HttpServlet {
             
             if (inserido && log && log2) {
                 out.println("<h1>Produto cadastrado com sucesso!</h1>");
-                out.println("<p>Você será redirecionado para a página principal em 5 segundos...</p>");
             } else {
                 out.println("<h1>Este produto já existe.</h1>");
                 out.println("<p>Tente novamente.</p>");

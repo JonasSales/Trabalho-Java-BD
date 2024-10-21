@@ -22,7 +22,7 @@ public class AtualizarEstoqueServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("estoque/acessar/atualizar_estoque.html").forward(request, response);
+        request.getRequestDispatcher("atualizar/atualizar_estoque.jsp").forward(request, response);
     }
 
     @Override

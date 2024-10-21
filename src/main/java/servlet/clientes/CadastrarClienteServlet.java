@@ -17,7 +17,7 @@ public class CadastrarClienteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("clientes/acessar/adicionar_cliente.jsp").forward(request, response);
+        request.getRequestDispatcher("adicionar/adicionar_cliente.jsp").forward(request, response);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class CadastrarClienteServlet extends HttpServlet {
                 out.println("window.location.href = 'http://localhost:8080/LoginServlet';"); // Substitua pela sua página principal
                 out.println("}, 3000);"); // Redireciona após 5 segundos
                 out.println("</script>");
-                out.println("<h1>Você foi cadastrado com sucesso com sucesso!</h1>");
+                out.println("<h1>Cadastro realizado com sucesso com sucesso!</h1>");
                 out.println("<p>Agora você será redirecionado para a página de login em 3 segundos...</p>");
             } else {
                 out.println("<script>");
