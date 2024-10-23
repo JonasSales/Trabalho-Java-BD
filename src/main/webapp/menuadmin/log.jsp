@@ -8,6 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Logs</title>
      <link rel="stylesheet" href="http://localhost:8080/style/configuracoesTabelas.css"/>
+     <link rel="icon" href="http://localhost:8080/lenobrega.jpg" type="image/png">
 </head>
 <body>
     <h1>Logs</h1>

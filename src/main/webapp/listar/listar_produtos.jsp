@@ -11,17 +11,20 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Listar Produtos</title>
         <link rel="stylesheet" href="http://localhost:8080/style/configuracoesTabelas.css"/>
+        <link rel="icon" href="http://localhost:8080/lenobrega.jpg" type="image/png">
     </head>
     <body>
         <h1>Lista de Produtos</h1>
 
-        <%  Usuario usuarioLogado = (Usuario) session.getAttribute("usuario");
+        <%  Usuario usuarioLogado = (Usuario) session.getAttribute("vendedor") != null
+                        ? (Usuario) session.getAttribute("vendedor")
+                        : (Usuario) session.getAttribute("funcionario");
             boolean verificadorUm = usuarioLogado.getTipodeUsuario().equals("vendedor");
             boolean verificadorDois = usuarioLogado.getTipodeUsuario().equals("admin");
             boolean verificadorTres = usuarioLogado.getTipodeUsuario().equals("funcionario");
         if (verificadorUm || verificadorDois || verificadorTres) {%>
         <a href="http://localhost:8080/redirecionarMenu.jsp">Retornar para página principal</a>
-        <%ArrayList<Produto> produtos = ProdutoDAO.BuscarProdutos();%>
+        <%ArrayList<Produto> produtos = ProdutoDAO.BuscarProdutos(usuarioLogado.getId());%>
         <table>
             <tr><th>ID</th><th>Nome</th><th>Categoria</th><th>Marca</th><th>Publico</th></tr>
                     <%for (Produto u : produtos) {

@@ -44,13 +44,11 @@ main {
 }
 
 iframe {
-    
     border: 0;
-    width: 70vh; /* Use 45% da largura disponível */
-    height: 70vh; /* Use 30% da altura disponível */
+    width: 90vh; /* Use 45% da largura disponível */
+    height: 90vh; /* Use 30% da altura disponível */
     display: flex;
     align-items: center;
-    position: fixed;
 }
 
 footer {

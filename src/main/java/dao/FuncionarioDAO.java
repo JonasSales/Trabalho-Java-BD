@@ -17,8 +17,8 @@ public class FuncionarioDAO {
     private static final String SENHA = "1234";
 
     private static final String SELECT_SQL = "select * from vw_funcionarios order by id_funcionario";
-    private static final String SELECT_INDIVIDUAL_SQL = "SELECT * FROM funcionario where id_funcionario = ?";
-    private static final String UPDATE_SQL = "UPDATE funcionario SET salario = ?, cargo=?, id_patrao = ?  WHERE id_funcionario= ?";
+    private static final String SELECT_INDIVIDUAL_SQL = "SELECT * FROM vw_funcionarios where email = ?";
+    private static final String UPDATE_SQL = "UPDATE funcionario SET salario = ?, cargo=?, id_patrao = ? WHERE id_funcionario= ?";
     private static final String DELETE_SQL = "delete from usuarios WHERE id_usuario= ?";
 
     public static void main(String[] args) {
@@ -26,37 +26,6 @@ public class FuncionarioDAO {
         //InserirUsuario();
         //AtualizarUsuario();
         //DeletarUsuario();
-    }
-
-    //CRUD
-    //READ
-    public static Funcionario BuscarFuncionario(int id_funcionario) {
-        Funcionario clt = new Funcionario();
-        try {
-
-            Driver driver = new Driver();
-            DriverManager.registerDriver(driver);
-
-            Connection conectando = (Connection) DriverManager.getConnection(URL, USUARIO, SENHA);
-            PreparedStatement stmt = conectando.prepareStatement(SELECT_INDIVIDUAL_SQL);
-
-            stmt.setInt(1, id_funcionario);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                int id = rs.getInt("id_funcionario");
-                double salario = rs.getDouble("salario");
-                String cargo = rs.getString("cargo");
-                clt.setId(id);
-                clt.setSalario(salario);
-                clt.setCargo(cargo);
-            }
-            stmt.close();
-            conectando.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return clt;
     }
 
     public static ArrayList BuscarFuncionarios(Usuario a) {
@@ -76,17 +45,11 @@ public class FuncionarioDAO {
                 if ((rs.getInt("id_patrao") == a.getId()) || a.getTipodeUsuario().equals(admin)) {
                     int id = rs.getInt("id_funcionario");
                     String nome = rs.getString("nome");
-                    //String cpf = rs.getString("cpf");
-                    //String email = rs.getString("email");
-                    //String dataDeNascimento = rs.getString("datadenascimento");
                     double salario = rs.getDouble("salario");
                     String cargo = rs.getString("cargo");
                     Funcionario clt = new Funcionario();
                     clt.setId(id);
                     clt.setNome(nome);
-                    //clt.setCpf(cpf);
-                    //clt.setEmail(email);
-                    //clt.setDatadenascimento(dataDeNascimento);
                     clt.setSalario(salario);
                     clt.setCargo(cargo);
                     funcionario.add(clt);
@@ -117,7 +80,7 @@ public class FuncionarioDAO {
 
             stmt.setDouble(1, funcionario.getSalario());
             stmt.setString(2, funcionario.getCargo());
-            stmt.setInt(3, funcionario.getIdPatrao());
+            stmt.setInt(3,funcionario.getIdPatrao());
             stmt.setInt(4, funcionario.getId());
 
             int rowsAffect = stmt.executeUpdate();
@@ -160,4 +123,44 @@ public class FuncionarioDAO {
         }
         return sucesso;
     }
+    
+    public static Funcionario BuscarFuncionarioPorEmail(String email) {
+        Funcionario u = new Funcionario();
+        try {
+            Driver driver = new Driver();
+            DriverManager.registerDriver(driver);
+
+            Connection conectando = (Connection) DriverManager.getConnection(URL, USUARIO, SENHA);
+
+            PreparedStatement stmt = conectando.prepareStatement(SELECT_INDIVIDUAL_SQL);
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+
+                int id = rs.getInt("id_funcionario");
+                String nome = rs.getString("nome");
+                String cpf = rs.getString("cpf");
+                Double salario = rs.getDouble("salario");
+                String cargo = rs.getString("cargo");
+                int id_patrao = rs.getInt("id_patrao");
+                String tipousuario = rs.getString("tipousuario");
+                u.setId(id);
+                u.setNome(nome);
+                u.setEmail(email);
+                u.setCpf(cpf);
+                u.setSalario(salario);
+                u.setCargo(cargo);
+                u.setIdPatrao(id_patrao);
+                u.setTipodeUsuario(tipousuario);
+            }
+
+            stmt.close();
+            conectando.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return u;
+    }
+    
 }

@@ -16,7 +16,7 @@ public class VendedorDAO {
     private static final String SENHA = "1234";
     
     private static final String SELECT_SQL = "SELECT * FROM vendedor order by id_vendedor";
-    private static final String SELECT_INDIVIDUAL_SQL = "SELECT * FROM vendedor where id_vendedor= ?";
+    private static final String SELECT_INDIVIDUAL_SQL = "select * from vw_vendedor where email = ?";
     private static final String UPDATE_SQL = "UPDATE vendedor SET cnpj = ?, cidade = ?, estado = ?  WHERE id_vendedor = ?";
     private static final String DELETE_SQL = "delete from vendedor WHERE id_vendedor = ?";
     
@@ -149,6 +149,47 @@ public class VendedorDAO {
     }
         return sucesso;
     }
+    
+    public static Vendedor BuscarVendedorPorEmail(String email) {
+        Vendedor u = new Vendedor();
+        try {
+            Driver driver = new Driver();
+            DriverManager.registerDriver(driver);
+
+            Connection conectando = (Connection) DriverManager.getConnection(URL, USUARIO, SENHA);
+
+            PreparedStatement stmt = conectando.prepareStatement(SELECT_INDIVIDUAL_SQL);
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+
+                int id = rs.getInt("id_vendedor");
+                String nome = rs.getString("nome");
+                String cpf = rs.getString("cpf");
+                String cnpj = rs.getString("cnpj");
+                String estado = rs.getString("estado");
+                String cidade = rs.getString("cidade");
+                String tipousuario = rs.getString("tipousuario");
+                u.setId(id);
+                u.setNome(nome);
+                u.setEmail(email);
+                u.setTipodeUsuario(tipousuario);
+                u.setCpf(cpf);
+                u.setCidade(cidade);
+                u.setEstado(estado);
+                u.setCnpj(cnpj);
+            }
+
+            stmt.close();
+            conectando.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return u;
+    }
+
+    
 }
 
     

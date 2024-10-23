@@ -35,7 +35,9 @@ public class AtualizarEstoqueServlet extends HttpServlet {
         double preco = Double.parseDouble(request.getParameter("preco"));
 
         HttpSession session = request.getSession();
-        Usuario a = (Usuario) session.getAttribute("usuario");
+        Usuario usuarioLogado = (Usuario) session.getAttribute("vendedor") != null
+                        ? (Usuario) session.getAttribute("vendedor")
+                        : (Usuario) session.getAttribute("funcionario");
         
         Estoque geral = new Estoque();
         geral.setId(id);
@@ -47,7 +49,7 @@ public class AtualizarEstoqueServlet extends HttpServlet {
         boolean inserido = EstoqueDAO.AtualizarEstoque(geral);
         
         
-        boolean log = LogDAO.inserirLog(a, "update", "estoque");
+        boolean log = LogDAO.inserirLog(usuarioLogado, "update", "estoque");
         
         response.setContentType("text/html;charset=UTF-8"); // Definindo o tipo de conteúdo
         

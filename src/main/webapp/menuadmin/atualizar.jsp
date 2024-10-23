@@ -11,10 +11,11 @@
         import { redirecionar } from 'http://localhost:8080/utils.js';
         window.redirecionar = redirecionar;
     </script>
+    <link rel="icon" href="http://localhost:8080/lenobrega.jpg" type="image/png">
 </head>
 <body>
     <%
-        Usuario usuarioLogado = (Usuario) session.getAttribute("usuario");
+        Usuario usuarioLogado = (Usuario) session.getAttribute("admin");
         // Verifica se o usuário está logado e se é admin
         String tipoUsuario = "admin";
         if (usuarioLogado == null || !usuarioLogado.getTipodeUsuario().equals(tipoUsuario)) {

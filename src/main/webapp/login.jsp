@@ -8,6 +8,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login</title>
         <link rel="stylesheet" href="http://localhost:8080/style/configuracoesCRUD.css"/>
+        <link rel="icon" href="http://localhost:8080/lenobrega.jpg" type="image/png">
     </head>
     <body>
         <form action="http://localhost:8080/LoginServlet" method="post">

@@ -43,8 +43,11 @@ public class AtualizarProdutoServlet extends HttpServlet {
         boolean inserido = ProdutoDAO.AtualizarProduto(geral);
         
         HttpSession session = request.getSession();
-        Usuario a = (Usuario) session.getAttribute("usuario");
-        boolean log = LogDAO.inserirLog(a, "update", "produto");
+        Usuario usuarioLogado = (Usuario) session.getAttribute("vendedor") != null
+                        ? (Usuario) session.getAttribute("vendedor")
+                        : (Usuario) session.getAttribute("funcionario");
+        
+        boolean log = LogDAO.inserirLog(usuarioLogado, "update", "produto");
         
         
         response.setContentType("text/html;charset=UTF-8"); // Definindo o tipo de conteúdo

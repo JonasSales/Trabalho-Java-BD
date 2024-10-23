@@ -28,6 +28,7 @@ public class CadastrarProdutoServlet extends HttpServlet {
        
         
         String id_produto = request.getParameter("id_produto");
+        String id_vendedor = request.getParameter("id_vendedor");
         String nome = request.getParameter("nome");
         String categoria = request.getParameter("categoria");
         String marca = request.getParameter("marca");
@@ -36,6 +37,7 @@ public class CadastrarProdutoServlet extends HttpServlet {
         Produto geral = new Produto();
         
         geral.setId_produto(Integer.parseInt(id_produto));
+        geral.setId_vendedor(Integer.parseInt(id_vendedor));
         geral.setNome(nome);
         geral.setCategoria(categoria);
         geral.setMarca(marca);
@@ -44,9 +46,11 @@ public class CadastrarProdutoServlet extends HttpServlet {
         boolean inserido = ProdutoDAO.InserirProduto(geral);
         
         HttpSession session = request.getSession();
-        Usuario a = (Usuario) session.getAttribute("usuario");
-        boolean log = LogDAO.inserirLog(a, "insert", "produtos");
-        boolean log2 = LogDAO.inserirLog(a, "insert", "estoque");
+        Usuario usuarioLogado = (Usuario) session.getAttribute("vendedor") != null
+                        ? (Usuario) session.getAttribute("vendedor")
+                        : (Usuario) session.getAttribute("funcionario");
+        boolean log = LogDAO.inserirLog(usuarioLogado, "insert", "produtos");
+        boolean log2 = LogDAO.inserirLog(usuarioLogado, "insert", "estoque");
         
         response.setContentType("text/html;charset=UTF-8"); // Definindo o tipo de conteúdo
         

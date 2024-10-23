@@ -1,5 +1,4 @@
-<%@page import="bancodedados.Usuario"%>
-<%@page import="bancodedados.Funcionario"%>
+<%@page import="bancodedados.Vendedor"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -8,14 +7,16 @@
         <title>Atualizar Funcionario</title>
         <link rel="stylesheet" href="http://localhost:8080/style/configuracoesCRUD.css"/>
         <script type="module">
-            import { mascaraCPF, redirecionar } from 'http://localhost:8080/utils.js';
+            import { mascaraCPF, redirecionar, mascaraSalario} from 'http://localhost:8080/utils.js';
             window.mascaraCPF = mascaraCPF;
             window.redirecionar = redirecionar;
+            window.mascaraSalario = mascaraSalario;
         </script>
+        <link rel="icon" href="http://localhost:8080/lenobrega.jpg" type="image/png">
     </head>
     <body>
         <%
-            Usuario usuarioLogado = (Usuario) session.getAttribute("usuario");
+            Vendedor usuarioLogado = (Vendedor) session.getAttribute("vendedor");
             boolean verificador = usuarioLogado.getTipodeUsuario().equals("vendedor");
             boolean verificadorDois = usuarioLogado.getTipodeUsuario().equals("admin");
             if (verificador || verificadorDois) {%>
@@ -27,14 +28,12 @@
             <input type="text" id="cpf" name="cpf" maxlength="14" pattern=".{14,14}" oninput="mascaraCPF(this)" required>
             <label>Email:</label>
             <input type="email" id="email" name="email" required>
-            <label>Data de Nascimento:</label>
-            <input type="date" id="datadenascimento" name="datadenascimento" required>
             <label>Salario: </label>
-            <input type="number" id="salario" name="salario" required>
+            <input type="text" id="salario" name="salario" required oninput="mascaraSalario(this)">
             <label>Cargo:</label>
             <input type="text" id="cargo" name="cargo" required>
             <label>Senha:</label>
-            <input type="password" id ="senha" name="senha" required>
+            <input type="password" id ="senha" name="senha" >
             <input type="submit" value="Cadastrar">
         </form> 
         <%} else {%>

@@ -1,5 +1,5 @@
+<%@page import="dao.UsuarioDAO"%>
 <%@page import="bancodedados.Usuario"%>
-<%@page import="bancodedados.Funcionario"%>
 <!DOCTYPE html>
 <html lang="pt-BR">
     <head>
@@ -11,19 +11,19 @@
     </head>
     <body>
         <%
-            Funcionario usuarioLogado = (Funcionario) session.getAttribute("funcionario");
-            boolean verificador = usuarioLogado.getTipodeUsuario().equals("funcionario");
+            Usuario usuarioLogado = (Usuario) session.getAttribute("vendedor");
+            boolean verificadorUm = usuarioLogado.getTipodeUsuario().equals("vendedor");
             boolean verificadorDois = usuarioLogado.getTipodeUsuario().equals("admin");
-            if (verificador || verificadorDois) {
+            if (verificadorUm || verificadorDois) {
         %>
         <header>
-            <h1>Menu Funcionario</h1>
+            <h1>Atualizar</h1>
         </header>
         <nav>
-            <a href="http://localhost:8080/atualizar/atualizar_cliente.jsp" target="centro">Atualizar dados</a>
-            <a href="http://localhost:8080/atualizar/atualizar_produto.jsp" target="centro">Atualizar produto</a>
-            <a href="http://localhost:8080/atualizar/atualizar_estoque.jsp" target="centro">Atualizar estoque</a>
-            <a href="http://localhost:8080/LogoutServlet">Sair</a>
+            <a href="http://localhost:8080/deletar/deletar_cliente.jsp" target="centro">Deletar Funcionario</a>
+            <a href="http://localhost:8080/deletar/deletar_produto.jsp" target="centro">Deletar produto</a>
+            <a href="http://localhost:8080/deletar/deletar_conta.jsp" target="centro">Deletar Conta</a>
+            <a href="http://localhost:8080/redirecionarMenu.jsp">Retornar para página principal</a>
         </nav>
         <main>
             <iframe src="http://localhost:8080/apresentacao.html" name="centro"></iframe>
@@ -39,8 +39,8 @@
         </div>
         <script>
             setTimeout(function () {
-                window.location.href = 'http://localhost:8080/home.jsp'; // Redireciona após 5 segundos
-            }, 5000);
+                window.location.href = 'http://localhost:8080/redirecionarMenu.jsp'; // Redireciona após 5 segundos
+            }, 1000);
         </script>
         <%
             }

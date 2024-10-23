@@ -29,15 +29,15 @@ public class AtualizarFuncionarioServlet extends HttpServlet {
     throws ServletException, IOException {
         
         HttpSession session = request.getSession();
-        Usuario a = (Usuario) session.getAttribute("usuario");
+        
+        
+        Usuario usuarioLogado = (Usuario) session.getAttribute("vendedor");
         
         int id_funcionario = Integer.parseInt(request.getParameter("id"));
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
         String nome = request.getParameter("nome");
         String cpf = request.getParameter("cpf");
-        String datadenascimento = request.getParameter("datadenascimento");
-        
         Double salario = Double.valueOf(request.getParameter("salario"));
         String cargo = request.getParameter("cargo");
         
@@ -48,22 +48,18 @@ public class AtualizarFuncionarioServlet extends HttpServlet {
         nUsuario.setSenha(senha);
         nUsuario.setNome(nome);
         nUsuario.setCpf(cpf);
-        nUsuario.setDatadenascimento(datadenascimento);
         nUsuario.setTipodeUsuario("funcionario");
         
         boolean inserido = UsuarioDAO.AtualizarUsuario(nUsuario);
+            
+        Funcionario nFuncionario = FuncionarioDAO.BuscarFuncionarioPorEmail(email);
         
-        Funcionario nFuncionario = FuncionarioDAO.BuscarFuncionario(id_funcionario);
-        
-        nFuncionario.setIdPatrao(a.getId());
         nFuncionario.setId(id_funcionario);
-        nFuncionario.setIdPatrao(a.getId());
         nFuncionario.setSalario(salario);
         nFuncionario.setCargo(cargo);
         
         boolean atualizar= FuncionarioDAO.AtualizarFuncionario(nFuncionario);
-        
-        boolean log = LogDAO.inserirLog(a, "update", "funcionarios");
+        boolean log = LogDAO.inserirLog(usuarioLogado, "update", "funcionarios");
         
         response.setContentType("text/html;charset=UTF-8"); // Definindo o tipo de conteúdo
         

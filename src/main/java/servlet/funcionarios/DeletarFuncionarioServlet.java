@@ -25,7 +25,7 @@ public class DeletarFuncionarioServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Usuario a = (Usuario) session.getAttribute("usuario");
+        Usuario a = (Usuario) session.getAttribute("vendedor");
         int id = Integer.parseInt(request.getParameter("id"));
         
         boolean deletado = UsuarioDAO.DeletarUsuario(id);

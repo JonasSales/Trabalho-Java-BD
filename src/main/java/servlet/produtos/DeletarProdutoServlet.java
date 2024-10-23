@@ -36,7 +36,7 @@ public class DeletarProdutoServlet extends HttpServlet {
         boolean inserido = ProdutoDAO.DeletarProduto(geral);
         
         HttpSession session = request.getSession();
-        Usuario a = (Usuario) session.getAttribute("usuario");
+        Usuario a = (Usuario) session.getAttribute("vendedor");
         boolean log = LogDAO.inserirLog(a, "delete", "produtos");
         
         response.setContentType("text/html;charset=UTF-8"); // Definindo o tipo de conteúdo

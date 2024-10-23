@@ -26,8 +26,12 @@ public class DeletarClienteServlet extends HttpServlet {
             throws ServletException, IOException {
         int id_cliente = Integer.parseInt(request.getParameter("id"));
         HttpSession session = request.getSession();
-        Usuario a = (Usuario) session.getAttribute("usuario");
-        boolean log = LogDAO.inserirLog(a, "delete", "usuarios");
+        Usuario usuarioLogado = (Usuario) session.getAttribute("funcionario") != null
+                    ? (Usuario) session.getAttribute("funcionario")
+                    : (session.getAttribute("admin") != null
+                    ? (Usuario) session.getAttribute("admin")
+                    : (Usuario) session.getAttribute("cliente"));
+        boolean log = LogDAO.inserirLog(usuarioLogado, "delete", "usuarios");
         boolean inserido = UsuarioDAO.DeletarUsuario(id_cliente);
         response.setContentType("text/html;charset=UTF-8"); // Definindo o tipo de conteúdo
 

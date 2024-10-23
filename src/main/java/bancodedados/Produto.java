@@ -3,6 +3,7 @@ package bancodedados;
 
 public class Produto {
     protected int id_produto;
+    protected int id_vendedor;
     protected String nome;
     protected String categoria;
     protected String marca;
@@ -12,6 +13,14 @@ public class Produto {
         return id_produto;
     }
 
+    public int getId_vendedor() {
+        return id_vendedor;
+    }
+
+    public void setId_vendedor(int id_vendedor) {
+        this.id_vendedor = id_vendedor;
+    }
+    
     public void setId_produto(int id_produto) {
         this.id_produto = id_produto;
     }

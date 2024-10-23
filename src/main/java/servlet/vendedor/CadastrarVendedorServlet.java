@@ -21,7 +21,7 @@ public class CadastrarVendedorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("adicionar/adicionar_vendedor.jsp").forward(request, response);
+        request.getRequestDispatcher("adicionar/cadastrarvendedor.jsp").forward(request, response);
     }
 
     @Override
@@ -32,7 +32,6 @@ public class CadastrarVendedorServlet extends HttpServlet {
         String senha = request.getParameter("senha");
         String nome = request.getParameter("nome");
         String cpf = request.getParameter("cpf");
-        String datadenascimento = request.getParameter("datadenascimento");
         String cnpj = request.getParameter("cnpj");
         String cidade = request.getParameter("cidade");
         String estado = request.getParameter("estado");
@@ -45,7 +44,6 @@ public class CadastrarVendedorServlet extends HttpServlet {
         vendedor.setSenha(senha);
         vendedor.setNome(nome);
         vendedor.setCpf(cpf);
-        vendedor.setDatadenascimento(datadenascimento);
         vendedor.setTipodeUsuario("vendedor");
         vendedor.setCnpj(cnpj);
         vendedor.setCidade(cidade);
@@ -57,7 +55,7 @@ public class CadastrarVendedorServlet extends HttpServlet {
         boolean atualizar = VendedorDAO.AtualizarVendedor(vendedor);
 
         HttpSession session = request.getSession();
-        Usuario a = (Usuario) session.getAttribute("usuario");
+        Usuario a = (Usuario) session.getAttribute("vendedor");
         if (a == null) {
             log = LogDAO.inserirLog(vendedor, "insert", "vendedor");
 

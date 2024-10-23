@@ -11,10 +11,14 @@
             window.mascaraDimensoes = mascaraDimensoes;
             window.redirecionar= redirecionar;
         </script>
+        <link rel="icon" href="http://localhost:8080/lenobrega.jpg" type="image/png">
     </head>
     <body>
         <%
-            Usuario usuarioLogado = (Usuario) session.getAttribute("usuario");
+            Usuario usuarioLogado = (Usuario) session.getAttribute("vendedor") != null
+                        ? (Usuario) session.getAttribute("vendedor")
+                        : (Usuario) session.getAttribute("funcionario");
+            
             boolean verificadorUm = usuarioLogado.getTipodeUsuario().equals("vendedor");
             boolean verificadorDois = usuarioLogado.getTipodeUsuario().equals("admin");
             boolean verificadorTres = usuarioLogado.getTipodeUsuario().equals("funcionario");

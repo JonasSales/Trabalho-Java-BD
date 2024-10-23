@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administração</title>
     <link rel="stylesheet" href="http://localhost:8080/style/configuracoesPGP.css"/>
+    <link rel="icon" href="http://localhost:8080/lenobrega.jpg" type="image/png">
 </head>
 <body>
     <%
         Usuario usuarioLogado = null;
         try {
-            usuarioLogado = (Usuario) session.getAttribute("usuario");
+            usuarioLogado = (Usuario) session.getAttribute("admin");
         } catch (Exception e) {
             // Logar o erro se necessário
             out.println("Erro ao recuperar o usuário da sessão: " + e.getMessage());

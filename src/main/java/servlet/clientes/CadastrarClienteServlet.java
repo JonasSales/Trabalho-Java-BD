@@ -17,7 +17,7 @@ public class CadastrarClienteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("adicionar/adicionar_cliente.jsp").forward(request, response);
+        request.getRequestDispatcher("adicionar/cadastrarusuario.jsp").forward(request, response);
     }
 
     @Override
@@ -28,14 +28,12 @@ public class CadastrarClienteServlet extends HttpServlet {
         String senha = request.getParameter("senha");
         String nome = request.getParameter("nome");
         String cpf = request.getParameter("cpf");
-        String datadenascimento = request.getParameter("datadenascimento");
 
         Usuario geral = new Usuario();
         geral.setEmail(email);
         geral.setSenha(senha);
         geral.setNome(nome);
         geral.setCpf(cpf);
-        geral.setDatadenascimento(datadenascimento);
         geral.setTipodeUsuario("cliente");
 
         boolean inserido = UsuarioDAO.InserirUsuario(geral);

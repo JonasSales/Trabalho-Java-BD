@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Principal</title>
     <link rel="stylesheet" href="http://localhost:8080/style/configuracoesPGP.css"/>
+    <link rel="icon" href="http://localhost:8080/lenobrega.jpg" type="image/png">
 </head>
 <body>
-    <%Usuario usuarioLogado = (Usuario) session.getAttribute("usuario");
+    <%Usuario usuarioLogado = (Usuario) session.getAttribute("cliente");
         // Verifica se o usuário está logado e se é cliente
         String tipoUsuario = "cliente";
         if (usuarioLogado == null || !usuarioLogado.getTipodeUsuario().equals(tipoUsuario)) {%>
@@ -26,7 +27,8 @@
             </header>
             <nav>
                 <a href="http://localhost:8080/atualizar/atualizar_cliente.jsp" target="centro">Atualizar dados</a>
-                <a href="http://localhost:8080/deletar/deletar_cliente.jsp" target="centro">Deletar conta</a>
+                <a href="http://localhost:8080/listar/listar_estoque.jsp">Ver produtos</a>
+                <a href="http://localhost:8080/deletar/deletar_conta.jsp" target="centro">Deletar conta</a>
                 <a href="http://localhost:8080/LogoutServlet">Sair</a>
             </nav>
             <main>

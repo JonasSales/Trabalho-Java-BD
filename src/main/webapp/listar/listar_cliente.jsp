@@ -9,6 +9,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Listar Clientes</title>
     <link rel="stylesheet" href="http://localhost:8080/style/configuracoesTabelas.css"/>
+    <link rel="icon" href="http://localhost:8080/lenobrega.jpg" type="image/png">
 </head>
 <body>
     <h1>Lista de Clientes</h1>
@@ -19,7 +20,7 @@
        
         // Criar tabela para exibir os clientes
         out.println("<table>");
-        out.println("<tr><th>ID</th><th>Nome</th><th>CPF</th><th>Email</th><th>Data de Nascimento</th></tr>");
+        out.println("<tr><th>ID</th><th>Nome</th><th>CPF</th><th>Email</th></tr>");
         
         for (Usuario u : clientes) {
             out.println("<tr>");
@@ -27,7 +28,6 @@
             out.println("<td>" + u.getNome() + "</td>");
             out.println("<td>" + u.getCpf() + "</td>");
             out.println("<td>" + u.getEmail() + "</td>");
-            out.println("<td>" + u.getDatadenascimento() + "</td>");
             out.println("</tr>");
         }
         out.println("</table>");

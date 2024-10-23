@@ -9,15 +9,18 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Produtos</title>
         <link rel="stylesheet" href="http://localhost:8080/style/configuracoesTabelas.css"/>
+        <link rel="icon" href="http://localhost:8080/lenobrega.jpg" type="image/png">
     </head>
     <body>
 
         <%
-            Usuario usuarioLogado = (Usuario) session.getAttribute("usuario");
-            boolean verificadorUm = usuarioLogado.getTipodeUsuario().equals("vendedor");
-            boolean verificadorDois = usuarioLogado.getTipodeUsuario().equals("admin");
-            boolean verificadorTres = usuarioLogado.getTipodeUsuario().equals("funcionario");
-            if (verificadorUm || verificadorDois || verificadorTres) {
+            Usuario usuarioLogado = (Usuario) session.getAttribute("funcionario") != null
+                    ? (Usuario) session.getAttribute("funcionario")
+                    : (session.getAttribute("vendedor") != null
+                    ? (Usuario) session.getAttribute("vendedor")
+                    : (Usuario) session.getAttribute("cliente"));
+
+            if (usuarioLogado != null) {
         %>
         <h1>Estoque</h1>
         <a href="http://localhost:8080/redirecionarMenu.jsp">Retornar para página principal</a>

@@ -10,6 +10,18 @@ export function mascaraCPF(input) {
     input.value = cpf;
 }
 
+export function mascaraSalario(input) {
+    let salario = input.value;
+            salario = salario.replace(/\D/g, "");
+
+            if (salario.length > 2) {
+                salario = salario.replace(/(\d+)(\d{2})$/, "$1.$2");
+            } else if (salario.length < 2) {
+                salario = "." + salario;
+            }
+            input.value = salario;
+}
+
 export function mascaraDimensoes(input) {
     let dimensoes = input.value;
     // Remove tudo que não for número
@@ -24,13 +36,13 @@ export function mascaraDimensoes(input) {
 
 
 export function redirecionar(endereco, tempo = 5000) {
-    setTimeout(function() {
+    setTimeout(function () {
         window.location.href = endereco;
     }, tempo); // Redireciona após o tempo especificado (5000 ms por padrão)
 }
-    
-    export function reloadPage() {
-            location.reload();  // Recarrega a página
-        }
+
+export function reloadPage() {
+    location.reload();  // Recarrega a página
+}
 
 

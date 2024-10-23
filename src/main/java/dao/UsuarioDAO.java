@@ -16,9 +16,9 @@ public class UsuarioDAO {
     private static final String SENHA = "1234";
 
     private static final String SELECT_SQL = "SELECT id_usuario, nome, cpf, email, datadenascimento FROM usuarios where tipousuario = ? order by id_usuario; ";
-    private static final String INSERT_SQL = "INSERT INTO usuarios (email, senha, nome, cpf,datadenascimento, tipousuario)  VALUES (?,?,?, ?, TO_DATE(?, 'YYYY-MM-DD'), ?)";
+    private static final String INSERT_SQL = "INSERT INTO usuarios (email, senha, nome, cpf, tipousuario)  VALUES (?,?,?, ?, ?)";
     private static final String SELECTPOREMAIL_SQL = "select * from usuarios where email = ?";
-    private static final String UPDATE_SQL = "UPDATE usuarios SET nome = ?, cpf = ?, email = ?, tipousuario = ? ,datadenascimento = TO_DATE(?, 'YYYY-MM-DD') WHERE id_usuario = ?";
+    private static final String UPDATE_SQL = "UPDATE usuarios SET nome = ?, cpf = ?, email = ?, tipousuario = ?  WHERE id_usuario = ?";
     private static final String DELETE_SQL = "delete from usuarios WHERE id_usuario= ?";
 
     public static void main(String[] args) {
@@ -42,14 +42,12 @@ public class UsuarioDAO {
             String nome = rs.getString("nome");
             String cpf = rs.getString("cpf");
             String email = rs.getString("email");
-            String dataDeNascimento = rs.getString("datadenascimento");
             Usuario c = new Usuario();
             
             c.setId(id);
             c.setNome(nome);
             c.setCpf(cpf);
             c.setEmail(email);
-            c.setDatadenascimento(dataDeNascimento);
             clientes.add(c);
         }
         
@@ -76,17 +74,18 @@ public class UsuarioDAO {
             stmt.setString(1, email);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-
                 int id = rs.getInt("id_usuario");
                 String senha = rs.getString("senha");
                 String emailBD = rs.getString("email");
                 String nome = rs.getString("nome");
+                String cpf = rs.getString("cpf");
                 String tipousuario = rs.getString("tipousuario");
                 u.setId(id);
                 u.setSenha(senha);
                 u.setEmail(emailBD);
                 u.setNome(nome);
                 u.setTipodeUsuario(tipousuario);
+                u.setCpf(cpf);
             }
 
             stmt.close();
@@ -113,8 +112,7 @@ public class UsuarioDAO {
             stmt.setString(2, usuario.getSenha());
             stmt.setString(3, usuario.getNome());
             stmt.setString(4, usuario.getCpf());
-            stmt.setString(5, usuario.getDatadenascimento());
-            stmt.setString(6, usuario.getTipodeUsuario());
+            stmt.setString(5, usuario.getTipodeUsuario());
 
             int rowsAffect = stmt.executeUpdate();
 
@@ -146,8 +144,7 @@ public class UsuarioDAO {
             stmt.setString(2, usuario.getCpf());
             stmt.setString(3, usuario.getEmail());
             stmt.setString(4, usuario.getTipodeUsuario());
-            stmt.setString(5, usuario.getDatadenascimento());
-            stmt.setInt(6, usuario.getId());
+            stmt.setInt(5, usuario.getId());
 
             int rowsAffect = stmt.executeUpdate();
 

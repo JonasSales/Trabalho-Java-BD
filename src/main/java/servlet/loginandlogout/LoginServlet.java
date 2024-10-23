@@ -1,7 +1,15 @@
 package servlet.loginandlogout;
 
+import bancodedados.Funcionario;
+import bancodedados.Login;
 import bancodedados.Usuario;
+import bancodedados.Vendedor;
+
+import dao.FuncionarioDAO;
+import dao.LoginDAO;
 import dao.UsuarioDAO;
+import dao.VendedorDAO;
+
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -27,30 +35,39 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
         boolean login = false;
-        Usuario a = UsuarioDAO.BuscarUsuarioPorEmail(email);
+
+        Login a = LoginDAO.BuscarUsuarioPorEmail(email);
         if (a.getEmail() != null && a.getSenha().equals(senha)) {
             login = true;
         }
         if(login){
             HttpSession session = request.getSession();
-            session.setAttribute("usuario", a);
             String admin = "admin";
             String funcionario = "funcionario";
             String vendedor = "vendedor";
             String cliente = "cliente";
-            if (a.getTipodeUsuario().equals(admin)) {
+            
+            if (a.getTipoUsuario().equals(admin)) {
+                Usuario adminH = UsuarioDAO.BuscarUsuarioPorEmail(email);
+                session.setAttribute("admin", adminH);
                 RequestDispatcher rd = request.getRequestDispatcher("menuadmin/index.jsp");
                 rd.forward(request, response);
             }
-            else if(a.getTipodeUsuario().equals(funcionario)){
+            else if(a.getTipoUsuario().equals(funcionario)){
+                Funcionario funcionarioH = FuncionarioDAO.BuscarFuncionarioPorEmail(email);
+                session.setAttribute("funcionario", funcionarioH);
                 RequestDispatcher rd = request.getRequestDispatcher("menufuncionario/index.jsp");
                 rd.forward(request, response);
             }
-            else if(a.getTipodeUsuario().equals(vendedor)){
+            else if(a.getTipoUsuario().equals(vendedor)){
+                Vendedor vendedorH = VendedorDAO.BuscarVendedorPorEmail(email);
+                session.setAttribute("vendedor", vendedorH);
                 RequestDispatcher rd = request.getRequestDispatcher("menuvendedor/index.jsp");
                 rd.forward(request, response);
             }
-            else if(a.getTipodeUsuario().equals(cliente)){
+            else if(a.getTipoUsuario().equals(cliente)){
+                Usuario clienteH = UsuarioDAO.BuscarUsuarioPorEmail(email);
+                session.setAttribute("cliente", clienteH);
                 RequestDispatcher rd = request.getRequestDispatcher("menucliente/index.jsp");
                 rd.forward(request, response);
             }

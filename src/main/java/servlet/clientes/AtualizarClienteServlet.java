@@ -29,30 +29,32 @@ public class AtualizarClienteServlet extends HttpServlet {
         String nome = request.getParameter("nome");
         String cpf = request.getParameter("cpf");
         String email = request.getParameter("email");
-        String datadenascimento = request.getParameter("datadenascimento");
         //String senha = request.getParameter("senha");
 
         HttpSession session = request.getSession();
-        Usuario a = (Usuario) session.getAttribute("usuario");
+        Usuario usuarioLogado = (Usuario) session.getAttribute("funcionario") != null
+                    ? (Usuario) session.getAttribute("funcionario")
+                    : (session.getAttribute("admin") != null
+                    ? (Usuario) session.getAttribute("admin")
+                    : (Usuario) session.getAttribute("cliente"));
         String admin = "admin";
         Usuario geral = new Usuario();
         geral.setNome(nome);
         geral.setCpf(cpf);
         geral.setEmail(email);
-        geral.setDatadenascimento(datadenascimento);
         geral.setTipodeUsuario("cliente");
         boolean inserido = false; 
         boolean log = false;
-        if (a.getTipodeUsuario().equals(admin)) {
+        if (usuarioLogado.getTipodeUsuario().equals(admin)) {
             int id_cliente = Integer.parseInt(request.getParameter("id_cliente"));
             geral.setId(id_cliente);
             
             inserido = UsuarioDAO.AtualizarUsuario(geral);
             
-            log = LogDAO.inserirLog(a, "update", "usuarios");
+            log = LogDAO.inserirLog(usuarioLogado, "update", "usuarios");
         }
         else{
-            geral.setId(a.getId());
+            geral.setId(usuarioLogado.getId());
             inserido = UsuarioDAO.AtualizarUsuario(geral);
             log = LogDAO.inserirLog(geral, "update", "usuarios");
         }

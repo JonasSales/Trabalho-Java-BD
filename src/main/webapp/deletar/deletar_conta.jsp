@@ -9,7 +9,6 @@
         <script src="http://localhost:8080/utils.js"></script>
         <link rel="icon" href="http://localhost:8080/lenobrega.jpg" type="image/png">
     </head>
-
     <body>
         <%
             Usuario usuarioLogado = (Usuario) session.getAttribute("funcionario") != null
@@ -21,12 +20,10 @@
             boolean verificadorUm = usuarioLogado.getTipodeUsuario().equals("cliente");
             boolean verificadorDois = usuarioLogado.getTipodeUsuario().equals("admin");
             boolean verificadorTres = usuarioLogado.getTipodeUsuario().equals("vendedor");
-            if (verificadorUm || verificadorDois || verificadorTres) {
-                if (verificadorDois || verificadorTres) {%>
-        <form action="http://localhost:8080/DeletarClienteServlet" method="post">
-            <label>Preencha o ID</label>
-            <input type="number" id="id" name="id" required>
-            <input type="submit" value="Deletar">
+            if (verificadorUm || verificadorDois || verificadorTres) {%>
+        <form action="http://localhost:8080/DeletarClienteServlet" method="post" onsubmit="reloadPage()">
+            <%out.println("<input type=\"hidden\" name=\"id\" value=\"" + usuarioLogado.getId() + "\">");%>
+            <input type="submit" value="Deletar Minha Conta">
         </form>
         <script>
             function reloadPage()
@@ -36,7 +33,6 @@
                 }, 1000);
             }
         </script>
-        <%}%>
         <%}%>
     </body>
 </html>

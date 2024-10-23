@@ -19,8 +19,8 @@ public class ProdutoDAO {
     private static final String USUARIO = "postgres"; // seu usuário
     private static final String SENHA = "1234";
     
-    private static final String INSERT_SQL = "INSERT INTO produtos(id_produto, nome_produto, categoria, marca, publico) VALUES (?, ?, ?, ?, ?)";
-    private static final String SELECT_SQL = "select * from produtos order by id_produto;";
+    private static final String INSERT_SQL = "INSERT INTO produtos(id_produto, id_vendedor ,nome_produto, categoria, marca, publico) VALUES (?,?,?,?, ?, ?)";
+    private static final String SELECT_SQL = "select * from produtos where id_vendedor = ? order by id_produto;";
     private static final String UPDATE_SQL = "UPDATE produtos SET nome_produto = ?, categoria= ?, marca= ?, publico = ? WHERE id_produto = ?";
     private static final String DELETE_SQL = "delete from produtos WHERE id_produto= ?";
     
@@ -34,7 +34,7 @@ public class ProdutoDAO {
     
     //CRUD
     //READ
-    public static ArrayList BuscarProdutos(){
+    public static ArrayList BuscarProdutos(int id_vendedor){
         ArrayList<Produto> produtos = new ArrayList();
         
         try {
@@ -47,6 +47,7 @@ public class ProdutoDAO {
         
         
         PreparedStatement stmt = conectando.prepareStatement(SELECT_SQL);
+        stmt.setInt(1,id_vendedor);
         
         ResultSet rs = stmt.executeQuery();
         
@@ -91,10 +92,11 @@ public class ProdutoDAO {
         PreparedStatement stmt = c.prepareStatement(INSERT_SQL);
         
             stmt.setInt(1, produto.getId_produto());
-            stmt.setString(2, produto.getNome());
-            stmt.setString(3, produto.getCategoria());
-            stmt.setString(4, produto.getMarca());
-            stmt.setString(5, produto.getPublico());
+            stmt.setInt(2, produto.getId_vendedor());
+            stmt.setString(3, produto.getNome());
+            stmt.setString(4, produto.getCategoria());
+            stmt.setString(5, produto.getMarca());
+            stmt.setString(6, produto.getPublico());
         
          int rowsAffect = stmt.executeUpdate();
          

@@ -10,16 +10,18 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Listar Clientes</title>
         <link rel="stylesheet" href="http://localhost:8080/style/configuracoesTabelas.css"/>
+        <link rel="icon" href="http://localhost:8080/lenobrega.jpg" type="image/png">
     </head>
     <body>
         <h1>Lista de seus funcionários</h1>
         <a href="http://localhost:8080/redirecionarMenu.jsp">Retornar para página principal</a>
         <%
-            Usuario usuarioLogado = (Usuario) session.getAttribute("usuario");
-            boolean verificador = usuarioLogado.getTipodeUsuario().equals("funcionario");
-            boolean verificadorDois = usuarioLogado.getTipodeUsuario().equals("admin");
-            boolean verificadorTres = usuarioLogado.getTipodeUsuario().equals("vendedor");
-            if (verificador || verificadorDois || verificadorTres) {
+            Usuario usuarioLogado = (Usuario) session.getAttribute("vendedor") != null
+                        ? (Usuario) session.getAttribute("vendedor")
+                        : (Usuario) session.getAttribute("admin");
+            boolean verificadorUm = usuarioLogado.getTipodeUsuario().equals("admin");
+            boolean verificadorDois = usuarioLogado.getTipodeUsuario().equals("vendedor");
+            if (verificadorUm || verificadorDois) {
                 ArrayList<Funcionario> funcionario = FuncionarioDAO.BuscarFuncionarios(usuarioLogado); %>
         <table>
             <tr><th>ID</th><th>Nome</th><th>Salario</th><th>Cargo</th></tr>
