@@ -17,18 +17,15 @@ public class FuncionarioDAO {
     private static final String SENHA = "1234";
 
     private static final String SELECT_SQL = "select * from vw_funcionarios order by id_funcionario";
-    private static final String SELECT_INDIVIDUAL_SQL = "SELECT * FROM vw_funcionarios where email = ?";
+    private static final String SELECT_INDIVIDUAL_SQL = "SELECT * FROM vw_funcionarios where ((email = ?) or (id_funcionario = ?))";
     private static final String UPDATE_SQL = "UPDATE funcionario SET salario = ?, cargo=?, id_patrao = ? WHERE id_funcionario= ?";
     private static final String DELETE_SQL = "delete from usuarios WHERE id_usuario= ?";
 
     public static void main(String[] args) {
-        //BuscarUsuarios();
-        //InserirUsuario();
-        //AtualizarUsuario();
-        //DeletarUsuario();
+        
     }
 
-    public static ArrayList BuscarFuncionarios(Usuario a) {
+    public static ArrayList buscarFuncionarios(Usuario a) {
         ArrayList<Funcionario> funcionario = new ArrayList();
         try {
 
@@ -68,7 +65,7 @@ public class FuncionarioDAO {
     }
 
     //UPDATE
-    public static boolean AtualizarFuncionario(Funcionario funcionario) {
+    public static boolean atualizarFuncionario(Funcionario funcionario) {
         boolean sucesso = false;
         try {
             Driver driver = new Driver();
@@ -100,7 +97,7 @@ public class FuncionarioDAO {
     }
 
     //DELETE
-    public static boolean DeletarFuncionario(int id_funcionario) {
+    public static boolean deletarFuncionario(int id_funcionario) {
         boolean sucesso = false;
         try {
             Driver driver = new Driver();
@@ -124,7 +121,7 @@ public class FuncionarioDAO {
         return sucesso;
     }
     
-    public static Funcionario BuscarFuncionarioPorEmail(String email) {
+    public static Funcionario buscarFuncionario(String email, int idFuncionario) {
         Funcionario u = new Funcionario();
         try {
             Driver driver = new Driver();
@@ -134,6 +131,7 @@ public class FuncionarioDAO {
 
             PreparedStatement stmt = conectando.prepareStatement(SELECT_INDIVIDUAL_SQL);
             stmt.setString(1, email);
+            stmt.setInt(2, idFuncionario);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
 
@@ -142,11 +140,12 @@ public class FuncionarioDAO {
                 String cpf = rs.getString("cpf");
                 Double salario = rs.getDouble("salario");
                 String cargo = rs.getString("cargo");
+                String emailF = rs.getString("email");
                 int id_patrao = rs.getInt("id_patrao");
                 String tipousuario = rs.getString("tipousuario");
                 u.setId(id);
                 u.setNome(nome);
-                u.setEmail(email);
+                u.setEmail(emailF);
                 u.setCpf(cpf);
                 u.setSalario(salario);
                 u.setCargo(cargo);

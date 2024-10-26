@@ -29,7 +29,7 @@
         <a href="http://localhost:8080/menuadmin/atualizar.jsp">Atualizar</a>
         <a href="http://localhost:8080/menuadmin/listar.jsp">Listar</a>
         <a href="http://localhost:8080/menuadmin/log.jsp">Ver logs</a>
-        <a href="http://localhost:8080/deletar/deletar_cliente.jsp" target="centro">Deletar</a>
+        <a href="http://localhost:8080/deletar/deletar_conta.jsp" target="centro">Deletar</a>
         <a href="http://localhost:8080/LogoutServlet">Sair</a>
     </nav>
     <main>

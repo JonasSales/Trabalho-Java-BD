@@ -49,13 +49,13 @@ public class CadastrarFuncionarioServlet extends HttpServlet {
         
         boolean inserido = UsuarioDAO.InserirUsuario(nUsuario);
         
-        Funcionario nFuncionario = FuncionarioDAO.BuscarFuncionarioPorEmail(email);
+        Funcionario nFuncionario = FuncionarioDAO.buscarFuncionario(email, 0);
         
         nFuncionario.setIdPatrao(usuarioLogado.getId());
         nFuncionario.setSalario(salario);
         nFuncionario.setCargo(cargo);
         
-        boolean atualizar= FuncionarioDAO.AtualizarFuncionario(nFuncionario);
+        boolean atualizar= FuncionarioDAO.atualizarFuncionario(nFuncionario);
         
         boolean log = LogDAO.inserirLog(usuarioLogado, "insert", "funcionarios");
         

@@ -19,7 +19,7 @@
                     ? (Usuario) session.getAttribute("admin")
                     : (Usuario) session.getAttribute("vendedor") != null
                     ? (Usuario) session.getAttribute("vendedor")
-                    : null;
+                    : (Usuario) session.getAttribute("cliente");
             if (usuarioLogado != null) {
                 String tipoUsuario = usuarioLogado.getTipodeUsuario();
 

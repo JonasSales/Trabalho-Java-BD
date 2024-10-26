@@ -38,7 +38,6 @@
                 <a>Seja bem-vindo, <strong><%= usuarioLogado.getNome() %></strong></a>
                 <br><br>
                 <a href="http://localhost:8080/adicionar/cadastrarusuario.jsp" target="centro">Adicionar Cliente</a>
-                <a href="http://localhost:8080/adicionar/adicionar_produto.jsp" target="centro">Adicionar Produto</a>
                 <a href="http://localhost:8080/adicionar/cadastrarvendedor.jsp" target="centro">Adicionar Vendedor</a>
                 <a href="http://localhost:8080/menuadmin/index.jsp">Voltar para a Página Principal</a>
             </nav>

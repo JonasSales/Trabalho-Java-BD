@@ -27,8 +27,8 @@ public class CadastrarProdutoServlet extends HttpServlet {
     throws ServletException, IOException {
        
         
-        String id_produto = request.getParameter("id_produto");
-        String id_vendedor = request.getParameter("id_vendedor");
+        String idProduto = request.getParameter("id_produto");
+        String idVendedor = request.getParameter("id_vendedor");
         String nome = request.getParameter("nome");
         String categoria = request.getParameter("categoria");
         String marca = request.getParameter("marca");
@@ -36,8 +36,8 @@ public class CadastrarProdutoServlet extends HttpServlet {
         
         Produto geral = new Produto();
         
-        geral.setId_produto(Integer.parseInt(id_produto));
-        geral.setId_vendedor(Integer.parseInt(id_vendedor));
+        geral.setId_produto(Integer.parseInt(idProduto));
+        geral.setId_vendedor(Integer.parseInt(idVendedor));
         geral.setNome(nome);
         geral.setCategoria(categoria);
         geral.setMarca(marca);

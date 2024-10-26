@@ -48,25 +48,25 @@ public class LoginServlet extends HttpServlet {
             String cliente = "cliente";
             
             if (a.getTipoUsuario().equals(admin)) {
-                Usuario adminH = UsuarioDAO.BuscarUsuarioPorEmail(email);
+                Usuario adminH = UsuarioDAO.buscarUsuario(email, 0);
                 session.setAttribute("admin", adminH);
                 RequestDispatcher rd = request.getRequestDispatcher("menuadmin/index.jsp");
                 rd.forward(request, response);
             }
             else if(a.getTipoUsuario().equals(funcionario)){
-                Funcionario funcionarioH = FuncionarioDAO.BuscarFuncionarioPorEmail(email);
+                Funcionario funcionarioH = FuncionarioDAO.buscarFuncionario(email, 0);
                 session.setAttribute("funcionario", funcionarioH);
                 RequestDispatcher rd = request.getRequestDispatcher("menufuncionario/index.jsp");
                 rd.forward(request, response);
             }
             else if(a.getTipoUsuario().equals(vendedor)){
-                Vendedor vendedorH = VendedorDAO.BuscarVendedorPorEmail(email);
+                Vendedor vendedorH = VendedorDAO.buscarVendedor(email, 0);
                 session.setAttribute("vendedor", vendedorH);
                 RequestDispatcher rd = request.getRequestDispatcher("menuvendedor/index.jsp");
                 rd.forward(request, response);
             }
             else if(a.getTipoUsuario().equals(cliente)){
-                Usuario clienteH = UsuarioDAO.BuscarUsuarioPorEmail(email);
+                Usuario clienteH = UsuarioDAO.buscarUsuario(email, 0);
                 session.setAttribute("cliente", clienteH);
                 RequestDispatcher rd = request.getRequestDispatcher("menucliente/index.jsp");
                 rd.forward(request, response);

@@ -17,7 +17,7 @@ public class UsuarioDAO {
 
     private static final String SELECT_SQL = "SELECT id_usuario, nome, cpf, email, datadenascimento FROM usuarios where tipousuario = ? order by id_usuario; ";
     private static final String INSERT_SQL = "INSERT INTO usuarios (email, senha, nome, cpf, tipousuario)  VALUES (?,?,?, ?, ?)";
-    private static final String SELECTPOREMAIL_SQL = "select * from usuarios where email = ?";
+    private static final String SELECTINDIVIDUAL = "select * from usuarios where (email = ?) or (id_usuario = ?)";
     private static final String UPDATE_SQL = "UPDATE usuarios SET nome = ?, cpf = ?, email = ?, tipousuario = ?  WHERE id_usuario = ?";
     private static final String DELETE_SQL = "delete from usuarios WHERE id_usuario= ?";
 
@@ -62,7 +62,7 @@ public class UsuarioDAO {
         return clientes;
     }
     
-    public static Usuario BuscarUsuarioPorEmail(String email) {
+    public static Usuario buscarUsuario(String email, int idUsuario) {
         Usuario u = new Usuario();
         try {
             Driver driver = new Driver();
@@ -70,8 +70,9 @@ public class UsuarioDAO {
 
             Connection conectando = (Connection) DriverManager.getConnection(URL, USUARIO, SENHA);
 
-            PreparedStatement stmt = conectando.prepareStatement(SELECTPOREMAIL_SQL);
+            PreparedStatement stmt = conectando.prepareStatement(SELECTINDIVIDUAL);
             stmt.setString(1, email);
+            stmt.setInt(2, idUsuario);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id_usuario");

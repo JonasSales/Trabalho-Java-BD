@@ -1,64 +1,85 @@
-<%@page import="bancodedados.Usuario"%>
 <%@page import="bancodedados.Funcionario"%>
-<%@page import="dao.UsuarioDAO"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="dao.FuncionarioDAO"%>
+<%@page import="dao.EstoqueDAO"%>
+<%@page import="bancodedados.Estoque"%>
+<%@page import="bancodedados.Usuario"%>
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Atualiza√ß√£o</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Atualizar estoque</title>
         <link rel="stylesheet" href="http://localhost:8080/style/configuracoesCRUD.css"/>
         <script type="module">
-            import { mascaraCPF, redirecionar, mascaraData } from 'http://localhost:8080/utils.js';
-            window.mascaraCPF = mascaraCPF;
-            window.mascaraData = mascaraData;
+            import { mascaraDimensoes, redirecionar } from 'http://localhost:8080/utils.js';
+            window.mascaraDimensoes = mascaraDimensoes;
             window.redirecionar = redirecionar;
         </script>
         <link rel="icon" href="http://localhost:8080/lenobrega.jpg" type="image/png">
     </head>
     <body>
         <%
-            Usuario usuarioLogado = (Usuario) session.getAttribute("funcionario") != null
-                    ? (Usuario) session.getAttribute("funcionario")
-                    : (session.getAttribute("admin") != null
-                    ? (Usuario) session.getAttribute("admin")
-                    : (Usuario) session.getAttribute("cliente"));
-            boolean verificadorUm = usuarioLogado.getTipodeUsuario().equals("cliente");
-            boolean verificadorDois = usuarioLogado.getTipodeUsuario().equals("admin");
-            boolean verificadorTres = usuarioLogado.getTipodeUsuario().equals("funcionario");
+            Usuario usuarioLogado = (Usuario) session.getAttribute("vendedor") != null
+                    ? (Usuario) session.getAttribute("vendedor")
+                    : (Usuario) session.getAttribute("funcionario");
+            
+            Estoque estoque = new Estoque();
 
-            if (verificadorUm || verificadorDois || verificadorTres) {
+            boolean verificadorUm = usuarioLogado != null && usuarioLogado.getTipodeUsuario().equals("vendedor");
+            boolean verificadorDois = usuarioLogado != null && usuarioLogado.getTipodeUsuario().equals("funcionario");
+
+            if (verificadorUm || verificadorDois) {
+                
         %>
-        <form action="http://localhost:8080/AtualizarClienteServlet" method="post">
-            <h2>Atualiza√ß√£o</h2>
-            <%if (verificadorDois) {%>
-            <label>Id do cliente:</label>
-            <input type="text" id="id_cliente" name="id_cliente" required>
-            <script>
-                var input = document.getElementById("id_cliente");
-                var numero = Number(input.value);
-            </script>
-            <%}%>
-            <label>Nome:</label>
-            <input type="text" id="nome" name="nome" required value="<%= usuarioLogado.getNome()%>">
-            <label>CPF: </label>
-            <input type="text" id="cpf" name="cpf" maxlength="14" pattern=".{14,14}" oninput="mascaraCPF(this)" required
-                   value="<%= usuarioLogado.getCpf()%>">
-            <label>Email:</label>
-            <input type="email" id="email" name="email" required value="<%= usuarioLogado.getEmail()%>">
-            <label>Senha:</label>
-            <input type="password" id="senha" name="senha" required>
+
+        <form method="GET" action="">
+            <label for="id">Pesquisar por ID:</label>
+            <input type="number" id="id" name="id" required>
+            <input type="submit" value="Pesquisar">
+        </form>
+
+        <%
+            String idEstoque = request.getParameter("id");
+            if (idEstoque != null && !idEstoque.isEmpty()) {
+                estoque = EstoqueDAO.BuscarEstoquePorId(Integer.parseInt(idEstoque));
+                if (estoque == null) {
+        %>
+                    <p>Produto n„o encontrado para o ID fornecido.</p>
+        <%
+                }
+            }
+
+            if (estoque != null) {
+        %>
+
+        <form action="http://localhost:8080/AtualizarEstoqueServlet" method="post">
+            <h2>Atualizar</h2>
+            <label>Dimensıes:</label>
+            <input type="text" id="dimensoes" name="dimensoes" required value="<%= estoque.getDimensoes() %>">
+            <label>Peso:</label>
+            <input type="text" id="peso" name="peso" required value="<%= estoque.getPeso() %>">
+            <label>PreÁo:</label>
+            <input type="text" id="preco" name="preco" required value="<%= estoque.getPreco() %>">
+            <label>Quantidade:</label>
+            <input type="text" id="quantidade" name="quantidade" required value="<%= estoque.getQuantidade() %>">
+            <input type="hidden" name="id" value="<%= estoque.getId() %>">
             <input type="submit" value="Atualizar">
         </form>
-        <%} else {%>
+        <%
+            }
+        %>
+
+        <%
+            } else {
+        %>
         <div>
-            Voc√™ n√£o tem permiss√£o para acessar esta p√°gina. Por favor, entre como cliente.
+            VocÍ n„o tem permiss„o para acessar esta p·gina. Por favor, entre como cliente.
         </div>
         <script>
             setTimeout(function () {
-                window.location.href = 'http://localhost:8080/redirecionarMenu.jsp'; // Redireciona ap√≥s 5 segundos
+                window.location.href = 'http://localhost:8080/redirecionarMenu.jsp';
             }, 5000);
         </script>
-        <%}%>
+        <% } %>
     </body>
 </html>

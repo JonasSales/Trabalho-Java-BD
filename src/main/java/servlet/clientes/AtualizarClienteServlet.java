@@ -24,40 +24,29 @@ public class AtualizarClienteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
 
-        
+        Usuario usuarioLogado = (Usuario) session.getAttribute("funcionario") != null
+                ? (Usuario) session.getAttribute("funcionario")
+                : (session.getAttribute("admin") != null
+                ? (Usuario) session.getAttribute("admin")
+                : (Usuario) session.getAttribute("cliente"));
+
         String nome = request.getParameter("nome");
         String cpf = request.getParameter("cpf");
         String email = request.getParameter("email");
-        //String senha = request.getParameter("senha");
 
-        HttpSession session = request.getSession();
-        Usuario usuarioLogado = (Usuario) session.getAttribute("funcionario") != null
-                    ? (Usuario) session.getAttribute("funcionario")
-                    : (session.getAttribute("admin") != null
-                    ? (Usuario) session.getAttribute("admin")
-                    : (Usuario) session.getAttribute("cliente"));
-        String admin = "admin";
         Usuario geral = new Usuario();
+
         geral.setNome(nome);
         geral.setCpf(cpf);
         geral.setEmail(email);
-        geral.setTipodeUsuario("cliente");
-        boolean inserido = false; 
+
+        boolean inserido = false;
         boolean log = false;
-        if (usuarioLogado.getTipodeUsuario().equals(admin)) {
-            int id_cliente = Integer.parseInt(request.getParameter("id_cliente"));
-            geral.setId(id_cliente);
-            
-            inserido = UsuarioDAO.AtualizarUsuario(geral);
-            
-            log = LogDAO.inserirLog(usuarioLogado, "update", "usuarios");
-        }
-        else{
-            geral.setId(usuarioLogado.getId());
-            inserido = UsuarioDAO.AtualizarUsuario(geral);
-            log = LogDAO.inserirLog(geral, "update", "usuarios");
-        }
+
+        inserido = UsuarioDAO.AtualizarUsuario(UsuarioDAO.buscarUsuario(email, 0));
+        log = LogDAO.inserirLog(usuarioLogado, "update", "usuarios");
 
         response.setContentType("text/html;charset=UTF-8"); // Definindo o tipo de conteúdo
 

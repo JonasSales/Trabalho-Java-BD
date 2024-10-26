@@ -53,7 +53,6 @@
                 <option value="Sergipe">SE</option>
                 <option value="Tocantins">TO</option>
                 <option value="Distrito Federal">DF</option>
-                
             </select>
             </label>
             <label>Senha:</label>

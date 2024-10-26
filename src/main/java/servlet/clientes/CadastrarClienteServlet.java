@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.PrintWriter;
 
 @WebServlet(name = "CadastrarClienteServlet", urlPatterns = {"/CadastrarClienteServlet"})
@@ -30,14 +31,22 @@ public class CadastrarClienteServlet extends HttpServlet {
         String cpf = request.getParameter("cpf");
 
         Usuario geral = new Usuario();
+        HttpSession session = request.getSession();
+        Usuario usuarioLogado = (Usuario) session.getAttribute("admin");
+        
+        if (usuarioLogado == null) {
+            geral.setId(0);
+        }
+        
         geral.setEmail(email);
         geral.setSenha(senha);
         geral.setNome(nome);
         geral.setCpf(cpf);
         geral.setTipodeUsuario("cliente");
-
+        
+        
         boolean inserido = UsuarioDAO.InserirUsuario(geral);
-        boolean log = LogDAO.inserirLog(geral, "insert", "usuarios");
+        boolean log = LogDAO.inserirLog(UsuarioDAO.buscarUsuario(email, 0), "insert", "usuarios");
         response.setContentType("text/html;charset=UTF-8"); // Definindo o tipo de conteúdo
 
         try (PrintWriter out = response.getWriter()) {

@@ -16,7 +16,7 @@ public class VendedorDAO {
     private static final String SENHA = "1234";
     
     private static final String SELECT_SQL = "SELECT * FROM vendedor order by id_vendedor";
-    private static final String SELECT_INDIVIDUAL_SQL = "select * from vw_vendedor where email = ?";
+    private static final String SELECT_INDIVIDUAL_SQL = "select * from vw_vendedor where (email = ?) or (id_vendedor = ?)";
     private static final String UPDATE_SQL = "UPDATE vendedor SET cnpj = ?, cidade = ?, estado = ?  WHERE id_vendedor = ?";
     private static final String DELETE_SQL = "delete from vendedor WHERE id_vendedor = ?";
     
@@ -24,39 +24,8 @@ public class VendedorDAO {
         
     }
     
-    public static Vendedor BuscarVendedor(int idVendedor){
-    Vendedor clt = new Vendedor();
-        try {
     
-        Driver driver = new Driver();
-        DriverManager.registerDriver(driver);
-        
-        Connection conectando = (Connection) DriverManager.getConnection(URL,USUARIO,SENHA);
-        
-        PreparedStatement stmt = conectando.prepareStatement(SELECT_INDIVIDUAL_SQL);
-        
-        stmt.setInt(1, idVendedor);
-        ResultSet rs = stmt.executeQuery();
-        while(rs.next()){
-            int id = rs.getInt("id_vendedor");
-            String cnpj = rs.getString("cnpj");
-            String cidade = rs.getString("cidade");
-            String estado = rs.getString("estado");
-            clt.setId(id);
-            clt.setCnpj(cnpj); 
-            clt.setCidade(cidade); 
-            clt.setEstado(estado); 
-        }
-        stmt.close();
-        conectando.close();   
-    } catch(SQLException e){
-        e.printStackTrace();
-    }
-        return clt;
-    }
-    
-    
-    public static ArrayList BuscarFuncionarios(){
+    public static ArrayList buscarVendedores(){
         ArrayList<Vendedor> vendedores = new ArrayList();
         try {
     
@@ -95,7 +64,7 @@ public class VendedorDAO {
     }
     
     //UPDATE
-    public static boolean AtualizarVendedor(Vendedor vendedor){
+    public static boolean atualizarVendedor(Vendedor vendedor){
         boolean sucesso = false;
         try {
         Driver driver = new Driver();
@@ -126,7 +95,7 @@ public class VendedorDAO {
         return sucesso;
     }
     //DELETE
-    public static boolean DeletarFuncionario(Vendedor vendedor){
+    public static boolean deletarFuncionario(Vendedor vendedor){
         boolean sucesso = false;
         try {
         Driver driver = new Driver();
@@ -150,7 +119,7 @@ public class VendedorDAO {
         return sucesso;
     }
     
-    public static Vendedor BuscarVendedorPorEmail(String email) {
+    public static Vendedor buscarVendedor(String email, int idVendedor) {
         Vendedor u = new Vendedor();
         try {
             Driver driver = new Driver();
@@ -160,6 +129,7 @@ public class VendedorDAO {
 
             PreparedStatement stmt = conectando.prepareStatement(SELECT_INDIVIDUAL_SQL);
             stmt.setString(1, email);
+            stmt.setInt(2, idVendedor);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
 
@@ -169,10 +139,11 @@ public class VendedorDAO {
                 String cnpj = rs.getString("cnpj");
                 String estado = rs.getString("estado");
                 String cidade = rs.getString("cidade");
+                String emailV = rs.getString("email");
                 String tipousuario = rs.getString("tipousuario");
                 u.setId(id);
                 u.setNome(nome);
-                u.setEmail(email);
+                u.setEmail(emailV);
                 u.setTipodeUsuario(tipousuario);
                 u.setCpf(cpf);
                 u.setCidade(cidade);

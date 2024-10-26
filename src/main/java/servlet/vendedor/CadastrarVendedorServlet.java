@@ -27,7 +27,7 @@ public class CadastrarVendedorServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
         String nome = request.getParameter("nome");
@@ -36,10 +36,17 @@ public class CadastrarVendedorServlet extends HttpServlet {
         String cidade = request.getParameter("cidade");
         String estado = request.getParameter("estado");
 
-        boolean log = false;
-
+        
+        Usuario geral = new Usuario();
+        HttpSession session = request.getSession();
+        Usuario usuarioLogado = (Usuario) session.getAttribute("admin");
+        
+        if (usuarioLogado == null) {
+            geral.setId(0);
+        }
+        
         Vendedor vendedor = new Vendedor();
-
+        
         vendedor.setEmail(email);
         vendedor.setSenha(senha);
         vendedor.setNome(nome);
@@ -49,22 +56,13 @@ public class CadastrarVendedorServlet extends HttpServlet {
         vendedor.setCidade(cidade);
         vendedor.setEstado(estado);
         boolean inserido = UsuarioDAO.InserirUsuario(vendedor);
-        Usuario buscarId = UsuarioDAO.BuscarUsuarioPorEmail(email);
+        Usuario buscarUsuario = UsuarioDAO.buscarUsuario(email, 0);
 
-        vendedor.setId(buscarId.getId());
-        boolean atualizar = VendedorDAO.AtualizarVendedor(vendedor);
-
-        HttpSession session = request.getSession();
-        Usuario a = (Usuario) session.getAttribute("vendedor");
-        if (a == null) {
-            log = LogDAO.inserirLog(vendedor, "insert", "vendedor");
-
-        } else {
-            log = LogDAO.inserirLog(a, "insert", "vendedor");
-        }
-
+        vendedor.setId(buscarUsuario.getId());
+        boolean atualizar = VendedorDAO.atualizarVendedor(vendedor);
+        boolean log = LogDAO.inserirLog(buscarUsuario, "insert", "vendedor");
+        
         response.setContentType("text/html;charset=UTF-8"); // Definindo o tipo de conteúdo
-
         try (PrintWriter out = response.getWriter()) {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -73,7 +71,6 @@ public class CadastrarVendedorServlet extends HttpServlet {
             out.println("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>");
             out.println("</head>");
             out.println("<body>");
-
             if (inserido && log && atualizar) {
                 out.println("<script>");
                 out.println("setTimeout(function() {");
@@ -86,12 +83,10 @@ public class CadastrarVendedorServlet extends HttpServlet {
                 out.println("<h1>Esse email já está sendo usado</h1>");
                 out.println("<p>Tente novamente.</p>");
             }
-
             out.println("</body>");
             out.println("</html>");
         }
     }
-
     @Override
     public String getServletInfo() {
         return "Servlet para cadastro de usuários";

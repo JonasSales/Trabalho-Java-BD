@@ -18,7 +18,7 @@
             </div>
             <script>
                 setTimeout(function() {
-                    window.location.href = 'http://localhost:8080/home.jsp'; // Redireciona após 1 segundos
+                    window.location.href = 'http://localhost:8080/login.jsp'; // Redireciona após 1 segundos
                 }, 1000);
             </script>
     <%} else {%>

@@ -72,9 +72,10 @@ public class LogDAO {
         try {
         Driver driver = new Driver();
         DriverManager.registerDriver(driver);
+        
         Connection conectando = (Connection) DriverManager.getConnection(URL,USUARIO,SENHA);
         PreparedStatement stmt = conectando.prepareStatement(INSERTLOG);
-        //SELECT registrar_log('insert','USUARIOS',CURRENT_DATE,CURRENT_TIME::TIME,1,'admin');
+        
         stmt.setString(1, acao);        
         stmt.setString(2, tabela);  
         stmt.setInt(3, usuario.getId());       

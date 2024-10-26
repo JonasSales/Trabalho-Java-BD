@@ -22,7 +22,7 @@
             boolean verificadorUm = usuarioLogado.getTipodeUsuario().equals("admin");
             boolean verificadorDois = usuarioLogado.getTipodeUsuario().equals("vendedor");
             if (verificadorUm || verificadorDois) {
-                ArrayList<Funcionario> funcionario = FuncionarioDAO.BuscarFuncionarios(usuarioLogado); %>
+                ArrayList<Funcionario> funcionario = FuncionarioDAO.buscarFuncionarios(usuarioLogado); %>
         <table>
             <tr><th>ID</th><th>Nome</th><th>Salario</th><th>Cargo</th></tr>
                     <%for (Funcionario u : funcionario) {

@@ -50,15 +50,16 @@ public class AtualizarFuncionarioServlet extends HttpServlet {
         nUsuario.setCpf(cpf);
         nUsuario.setTipodeUsuario("funcionario");
         
+        String teste = "";
+        
         boolean inserido = UsuarioDAO.AtualizarUsuario(nUsuario);
-            
-        Funcionario nFuncionario = FuncionarioDAO.BuscarFuncionarioPorEmail(email);
+        Funcionario nFuncionario = FuncionarioDAO.buscarFuncionario(email, id_funcionario);
         
         nFuncionario.setId(id_funcionario);
         nFuncionario.setSalario(salario);
         nFuncionario.setCargo(cargo);
         
-        boolean atualizar= FuncionarioDAO.AtualizarFuncionario(nFuncionario);
+        boolean atualizar= FuncionarioDAO.atualizarFuncionario(nFuncionario);
         boolean log = LogDAO.inserirLog(usuarioLogado, "update", "funcionarios");
         
         response.setContentType("text/html;charset=UTF-8"); // Definindo o tipo de conteúdo

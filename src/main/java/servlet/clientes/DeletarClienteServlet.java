@@ -3,13 +3,13 @@ package servlet.clientes;
 import bancodedados.Usuario;
 import dao.UsuarioDAO;
 import dao.LogDAO;
-import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet(name = "DeletarClienteServlet", urlPatterns = {"/DeletarClienteServlet"})
@@ -18,7 +18,7 @@ public class DeletarClienteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("deletar/deletar_cliente.jsp").forward(request, response);
+        request.getRequestDispatcher("deletar/deletar_conta.jsp").forward(request, response);
     }
 
     @Override
@@ -26,38 +26,54 @@ public class DeletarClienteServlet extends HttpServlet {
             throws ServletException, IOException {
         int id_cliente = Integer.parseInt(request.getParameter("id"));
         HttpSession session = request.getSession();
-        Usuario usuarioLogado = (Usuario) session.getAttribute("funcionario") != null
-                    ? (Usuario) session.getAttribute("funcionario")
-                    : (session.getAttribute("admin") != null
-                    ? (Usuario) session.getAttribute("admin")
-                    : (Usuario) session.getAttribute("cliente"));
-        boolean log = LogDAO.inserirLog(usuarioLogado, "delete", "usuarios");
+        boolean verificadorAdmin = false;
+        boolean log = false;
+
+        if (session.getAttribute("funcionario") != null) {
+
+            Usuario usuarioLogado = (Usuario) session.getAttribute("funcionario");
+            log = LogDAO.inserirLog(usuarioLogado, "delete", "funcionario");
+
+        } else if (session.getAttribute("admin") != null) {
+
+            Usuario usuarioLogado = (Usuario) session.getAttribute("admin");
+            verificadorAdmin = usuarioLogado.getTipodeUsuario().equals("admin");
+            log = LogDAO.inserirLog(usuarioLogado, "delete", "usuarios");
+            
+        } else if (session.getAttribute("vendedor") != null) {
+
+            Usuario usuarioLogado = (Usuario) session.getAttribute("vendedor");
+            log = LogDAO.inserirLog(usuarioLogado, "delete", "usuarios");
+
+        } else {
+
+            Usuario usuarioLogado = (Usuario) session.getAttribute("cliente");
+            log = LogDAO.inserirLog(usuarioLogado, "delete", "cliente");
+
+        }
+
         boolean inserido = UsuarioDAO.DeletarUsuario(id_cliente);
-        response.setContentType("text/html;charset=UTF-8"); // Definindo o tipo de conteúdo
+        response.setContentType("text/html;charset=UTF-8");
 
         try (PrintWriter out = response.getWriter()) {
             if (inserido && log) {
-                session.invalidate();
 
                 out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Deletação Concluída</title>");
-                out.println("</head>");
+                out.println("<head><title>Deletação Concluída</title></head>");
                 out.println("<body>");
-                out.println("<h1>Obrigado pelo tempo que pudemos lhe ajudar!</h1>");
-                out.println("<p>Você será redirecionado para a página principal em 3 segundos...</p>");
-                out.println("<script>");
-                out.println("setTimeout(function() {");
-                out.println("window.parent.location.href = 'http://localhost:8080/index.jsp';");
-                out.println("}, 3000);"); 
-                out.println("</script>");
-                out.println("</body>");
-                out.println("</html>");
+                out.println("<h1>Deletado com sucesso</h1>");
+                if (!verificadorAdmin) {
+                    session.invalidate();
+                    out.println("<script>");
+                    out.println("window.top.location.href = 'http://localhost:8080/LogoutServlet';"); // Redireciona a página principal
+                    out.println("</script>");
+                    out.println("</body>");
+                    out.println("</html>");
+                }
+
             } else {
                 out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Erro</title>");
-                out.println("</head>");
+                out.println("<head><title>Erro</title></head>");
                 out.println("<body>");
                 out.println("<h1>Erro ao deletar cliente.</h1>");
                 out.println("<p>Por favor, verifique se o ID: " + id_cliente + " realmente existe.</p>");
@@ -66,6 +82,7 @@ public class DeletarClienteServlet extends HttpServlet {
             }
         }
     }
+
     @Override
     public String getServletInfo() {
         return "Servlet para cadastro de usuários";
