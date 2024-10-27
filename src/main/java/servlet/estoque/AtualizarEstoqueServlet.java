@@ -47,8 +47,6 @@ public class AtualizarEstoqueServlet extends HttpServlet {
         geral.setPreco(preco);
         
         boolean inserido = EstoqueDAO.AtualizarEstoque(geral);
-        
-        
         boolean log = LogDAO.inserirLog(usuarioLogado, "update", "estoque");
         
         response.setContentType("text/html;charset=UTF-8"); // Definindo o tipo de conteúdo
@@ -71,18 +69,16 @@ public class AtualizarEstoqueServlet extends HttpServlet {
                 out.println("<h1>Estoque atualizado com sucesso!</h1>");
                 out.println("<p>Você será redirecionado para a página principal em 5 segundos...</p>");
             } else {
-                out.println("<h1>Produto não achado dentro do estoque.</h1>");
-                out.println("<p>Certifique-se que o id exista na tabela produtos.</p>");
+                out.println("<h1>Erro ao atualizar o estoque.</h1>");
+                out.println("<p>Certifique-se que você preencheu corretamente.</p>");
             }
-            
             out.println("</body>");
             out.println("</html>");
         }
     }
-
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

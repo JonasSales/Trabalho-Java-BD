@@ -9,10 +9,10 @@
     <title>Atualização</title>
     <link rel="stylesheet" href="http://localhost:8080/style/configuracoesCRUD.css"/>
     <script type="module">
-        import { mascaraCPF, redirecionar, mascaraData } from 'http://localhost:8080/utils.js';
+        import { mascaraCPF, redirecionar, mascaraCNPJ } from 'http://localhost:8080/utils.js';
         window.mascaraCPF = mascaraCPF;
-        window.mascaraData = mascaraData;
         window.redirecionar = redirecionar;
+        window.mascaraCNPJ = mascaraCNPJ;
     </script>
     <link rel="icon" href="http://localhost:8080/lenobrega.jpg" type="image/png">
 </head>
@@ -45,16 +45,16 @@
             }
             if (vendedor != null) {
         %>
-            <form action="http://localhost:8080/AtualizarClienteServlet" method="post">
+            <form action="http://localhost:8080/AtualizarVendedorServlet" method="post">
                 <label>Nome:</label>
                 <input type="text" id="nome" name="nome" required value="<%= vendedor.getNome()%>">
                 <label>Email:</label>
-                <input type="text" id="nome" name="nome" required value="<%= vendedor.getEmail()%>">
+                <input type="email" id="email" name="email" required value="<%= vendedor.getEmail()%>">
                 <label>CPF: </label>
                 <input type="text" id="cpf" name="cpf" maxlength="14" pattern=".{14,14}" oninput="mascaraCPF(this)" required
                        value="<%= vendedor.getCpf()%>">
                 <label>CNPJ: </label>
-                <input type="text" id="cnpj" name="cnpj" maxlength="18" pattern=".{18,18}" required
+                <input type="text" id="cnpj" name="cnpj" maxlength="18" pattern=".{18,18}" oninput ="mascaraCNPJ(this)" required 
                        value="<%= vendedor.getCnpj()%>">
                 <label>Cidade: </label>
                 <input type="text" id="cidade" name="cidade" required
@@ -101,7 +101,7 @@
     <% } else if (verificadorUm || verificadorTres) {
     Vendedor vendedorLogado = VendedorDAO.buscarVendedor(" ", usuarioLogado.getId());
     %>
-        <form action="http://localhost:8080/AtualizarClienteServlet" method="post">
+        <form action="http://localhost:8080/AtualizarVendedorServlet" method="post">
             <label>Nome:</label>
             <input type="text" id="nome" name="nome" required value="<%= vendedorLogado.getNome()%>">
             <label>CPF: </label>
@@ -112,9 +112,8 @@
             <label>Cidade</label>
             <input type="text" id="cidade" name="cidade" required value="<%= vendedorLogado%>">
             <label>CNPJ:</label>
-            <input type="email" id="email" name="email" required value="<%= vendedorLogado.getCnpj()%>">
-            <label>Email:</label>
-            <input type="email" id="email" name="email" required value="<%= vendedorLogado.getEmail()%>">
+            <input type="text" id="cnpj" name="cnpj" required value="<%= vendedorLogado.getCnpj()%>" oninput="mascaraCNPJ(this)" 
+                   maxlength="18" pattern=".{18,18}">
             <label>Senha:</label>
             <input type="password" id="senha" name="senha" required>
             <input type="hidden" name="id" value="<%= vendedorLogado.getId() %>">

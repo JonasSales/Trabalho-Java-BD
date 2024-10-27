@@ -7,7 +7,7 @@
         <title>Redirecionar Menu</title>
         <script type="text/javascript">
             function redirecionar(url) {
-                window.location.href = url;
+                window.parent.location.href = url;
             }
         </script>
     </head>

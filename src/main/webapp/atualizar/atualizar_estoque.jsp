@@ -22,11 +22,9 @@
     Usuario usuarioLogado = (Usuario) session.getAttribute("vendedor") != null
             ? (Usuario) session.getAttribute("vendedor")
             : (Usuario) session.getAttribute("funcionario");
-    
     Estoque estoque = null;
     boolean verificadorUm = usuarioLogado != null && usuarioLogado.getTipodeUsuario().equals("vendedor");
     boolean verificadorDois = usuarioLogado != null && usuarioLogado.getTipodeUsuario().equals("funcionario");
-    
     if (verificadorUm || verificadorDois) {
 %>
     <form method="GET" action="">
@@ -46,19 +44,17 @@
 %>
     <form action="http://localhost:8080/AtualizarEstoqueServlet" method="post">
         <h2>Atualizar</h2>
-        
+        <label>Nome:</label>
+        <input type="text" id="nome" name="nome" required value="<%= estoque.getNome() %>">
         <label>Peso:</label>
         <input type="text" id="peso" name="peso" required value="<%= estoque.getPeso() %>">
-        
         <label>Dimensões:</label>
-        <input type="text" id="dimensoes" name="dimensoes" required value="<%= estoque.getDimensoes() %>">
-        
+        <input type="text" id="dimensoes" name="dimensoes" required value="<%= estoque.getDimensoes() %> " oninput="mascaraDimensoes(this)"
+               maxlength="8" pattern=".{8,8}">
         <label>Preço:</label>
         <input type="text" id="preco" name="preco" required value="<%= estoque.getPreco() %>">
-        
         <label>Quantidade:</label>
         <input type="text" id="quantidade" name="quantidade" required value="<%= estoque.getQuantidade() %>">
-        
         <input type="hidden" name="id" value="<%= estoque.getId() %>">
         <input type="submit" value="Atualizar">
     </form>

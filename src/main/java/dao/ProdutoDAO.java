@@ -16,7 +16,7 @@ public class ProdutoDAO {
     private static final String SENHA = "1234";
 
     private static final String INSERT_SQL = "INSERT INTO produtos(id_produto, id_vendedor ,nome_produto, categoria, marca, publico) VALUES (?,?,?,?, ?, ?)";
-    private static final String SELECT_SQL = "SELECT * FROM produtos WHERE (CAST(id_produto AS TEXT) LIKE ? and id_vendedor = ?);";
+    private static final String SELECT_SQL = "SELECT * FROM produtos WHERE ((CAST(id_produto AS TEXT) LIKE ? or nome_produto like ?) and id_vendedor = ?);";
     private static final String UPDATE_SQL = "UPDATE produtos SET nome_produto = ?, categoria= ?, marca= ?, publico = ? WHERE id_produto = ?";
     private static final String DELETE_SQL = "delete from produtos WHERE id_produto= ?";
     private static final String BUSCARPRODUTO_SQL = "SELECT * FROM produtos WHERE (id_produto) = ? AND (id_vendedor = ?)";
@@ -40,7 +40,8 @@ public class ProdutoDAO {
             c = DriverManager.getConnection(URL, USUARIO, SENHA);
             statement = c.prepareStatement(SELECT_SQL);
             statement.setString(1, "%" +  idProduto + "%");
-            statement.setInt(2, idVendedor);
+            statement.setString(2, "%" +  idProduto + "%");
+            statement.setInt(3, idVendedor);
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {

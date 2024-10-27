@@ -14,7 +14,6 @@
     </head>
     <body>
         <h1>Lista de seus funcionários</h1>
-        <a href="http://localhost:8080/redirecionarMenu.jsp">Retornar para página principal</a>
         <%
             Usuario usuarioLogado = (Usuario) session.getAttribute("vendedor") != null
                         ? (Usuario) session.getAttribute("vendedor")

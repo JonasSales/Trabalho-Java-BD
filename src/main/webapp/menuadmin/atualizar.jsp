@@ -35,9 +35,7 @@
                 <h1>Atualizar</h1>
             </header>
             <nav>
-                <a>Seja bem-vindo, <strong><%= usuarioLogado.getNome() %></strong></a>
                 <br><br>
-                <a href="http://localhost:8080/atualizar/atualizar_cliente.jsp" target="centro">Atualizar Cliente</a>
                 <a href="http://localhost:8080/atualizar/atualizar_vendedor.jsp" target="centro">Atualizar Vendedor</a>
                 <a href="http://localhost:8080/menuadmin/index.jsp">Voltar para a Página Principal</a>
             </nav>

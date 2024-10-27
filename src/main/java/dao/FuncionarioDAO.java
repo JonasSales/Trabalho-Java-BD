@@ -16,8 +16,8 @@ public class FuncionarioDAO {
     private static final String USUARIO = "postgres"; // seu usuário
     private static final String SENHA = "1234";
 
-    private static final String SELECT_SQL = "select * from vw_funcionarios order by id_funcionario";
-    private static final String SELECT_INDIVIDUAL_SQL = "SELECT * FROM vw_funcionarios where ((email = ?) or (id_funcionario = ?))";
+    private static final String SELECT_SQL = "select * from vw_funcionarios order by id_usuario";
+    private static final String SELECT_INDIVIDUAL_SQL = "SELECT * FROM vw_funcionarios where ((email = ?) or (id_usuario= ?))";
     private static final String UPDATE_SQL = "UPDATE funcionario SET salario = ?, cargo=?, id_patrao = ? WHERE id_funcionario= ?";
     private static final String DELETE_SQL = "delete from usuarios WHERE id_usuario= ?";
 
@@ -40,7 +40,7 @@ public class FuncionarioDAO {
             while (rs.next()) {
 
                 if ((rs.getInt("id_patrao") == a.getId()) || a.getTipodeUsuario().equals(admin)) {
-                    int id = rs.getInt("id_funcionario");
+                    int id = rs.getInt("id_usuario");
                     String nome = rs.getString("nome");
                     double salario = rs.getDouble("salario");
                     String cargo = rs.getString("cargo");
@@ -135,7 +135,7 @@ public class FuncionarioDAO {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
 
-                int id = rs.getInt("id_funcionario");
+                int id = rs.getInt("id_usuario");
                 String nome = rs.getString("nome");
                 String cpf = rs.getString("cpf");
                 Double salario = rs.getDouble("salario");

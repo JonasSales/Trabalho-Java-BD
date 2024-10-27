@@ -61,6 +61,7 @@ input[type="submit"]:hover {
 }
 
 iframe {
+    background-color: #ffffff;
     border: 0;
     width: 80vh; /* Use 45% da largura disponível */
     height: 80vh; /* Use 30% da altura disponível */

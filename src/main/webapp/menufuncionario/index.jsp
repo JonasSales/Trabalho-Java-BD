@@ -11,10 +11,12 @@
     </head>
     <body>
         <%
-            Funcionario usuarioLogado = (Funcionario) session.getAttribute("funcionario");
+            
+            Usuario usuarioLogado = (Usuario) session.getAttribute("funcionario");
+            
             boolean verificador = usuarioLogado.getTipodeUsuario().equals("funcionario");
-            boolean verificadorDois = usuarioLogado.getTipodeUsuario().equals("admin");
-            if (verificador || verificadorDois) {
+            
+            if (verificador) {
         %>
         <header>
             <h1>Menu Funcionario</h1>

@@ -12,14 +12,14 @@ export function mascaraCPF(input) {
 
 export function mascaraSalario(input) {
     let salario = input.value;
-            salario = salario.replace(/\D/g, "");
+    salario = salario.replace(/\D/g, "");
 
-            if (salario.length > 2) {
-                salario = salario.replace(/(\d+)(\d{2})$/, "$1.$2");
-            } else if (salario.length < 2) {
-                salario = "." + salario;
-            }
-            input.value = salario;
+    if (salario.length > 2) {
+        salario = salario.replace(/(\d+)(\d{2})$/, "$1.$2");
+    } else if (salario.length < 2) {
+        salario = "." + salario;
+    }
+    input.value = salario;
 }
 
 export function mascaraDimensoes(input) {
@@ -45,4 +45,13 @@ export function reloadPage() {
     location.reload();  // Recarrega a página
 }
 
+export function mascaraCNPJ(input) {
+    let cnpj = input.value;
+    cnpj = cnpj.replace(/[^a-zA-Z0-9]/g, '');
+    cnpj = cnpj.replace(/^([a-zA-Z0-9]{2})([a-zA-Z0-9])/, "$1.$2");
+    cnpj = cnpj.replace(/^([a-zA-Z0-9]{2})\.([a-zA-Z0-9]{3})([a-zA-Z0-9])/, "$1.$2.$3");
+    cnpj = cnpj.replace(/\.([a-zA-Z0-9]{3})([a-zA-Z0-9])/, ".$1/$2");
+    cnpj = cnpj.replace(/([a-zA-Z0-9]{4})(\d{2})$/, "$1-$2");
 
+    input.value = cnpj;
+}

@@ -23,7 +23,6 @@
             if (usuarioLogado != null) {
         %>
         <h1>Estoque</h1>
-        <a href="http://localhost:8080/redirecionarMenu.jsp">Retornar para página principal</a>
         <table>
             <tr><th>ID</th><th>Nome</th><th>Quantidade</th><th>Peso</th><th>Dimensoes</th><th>Preço</th></tr>
                     <%ArrayList<Estoque> estoque = EstoqueDAO.BuscarEstoque();

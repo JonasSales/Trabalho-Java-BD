@@ -43,10 +43,9 @@
 
         if (verificadorUm || verificadorDois) {
     %>
-    <a href="<%= request.getContextPath() %>/redirecionarMenu.jsp">Retornar para página principal</a>
     <form method="GET" action="">
-        <label for="idProduto">Pesquisar por ID:</label>
-        <input type="number" id="idProduto" name="idProduto" pattern="[0-9]+$" >
+        <label for="idProduto">Pesquisar por ID ou nome:</label>
+        <input type="text" id="idProduto" name="idProduto" >
         <input type="submit" value="Pesquisar">
     </form>
     <table>
@@ -60,7 +59,10 @@
         <%
             String idProduto = request.getParameter("idProduto");
             ArrayList<Produto> produtos;
-            if (idProduto != null && !idProduto.isEmpty()) {
+            
+            boolean verificadorTres = (idProduto != null) && (!idProduto.isEmpty());
+            
+            if (verificadorTres) {
                 produtos = ProdutoDAO.BuscarProdutos(idProduto, id);
             } else {
                 produtos = ProdutoDAO.BuscarProdutos("", id);

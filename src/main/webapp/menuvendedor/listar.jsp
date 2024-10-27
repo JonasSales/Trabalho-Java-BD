@@ -20,10 +20,10 @@
             <h1>Listar</h1>
         </header>
         <nav>
-            <a href="http://localhost:8080/listar/listar_funcionarios.jsp">Listar Funcionarios</a>
-            <a href="http://localhost:8080/listar/listar_estoque.jsp">Listar Estoque</a>
-            <a href="http://localhost:8080/listar/listar_produtos.jsp">Listar Produtos</a>
-             <a href="http://localhost:8080/redirecionarMenu.jsp">Retornar para página principal</a>
+            <a href="http://localhost:8080/listar/listar_funcionarios.jsp" target="centro">Listar Funcionarios</a>
+            <a href="http://localhost:8080/listar/listar_estoque.jsp"  target="centro">Listar Estoque</a>
+            <a href="http://localhost:8080/listar/listar_produtos.jsp" target="centro">Listar Produtos</a>
+            <a href="http://localhost:8080/redirecionarMenu.jsp">Retornar para página principal</a>
         </nav>
         <main>
             <iframe src="http://localhost:8080/apresentacao.html" name="centro"></iframe>

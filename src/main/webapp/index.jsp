@@ -13,11 +13,14 @@
     </header>
 
     <nav>
-        <a href="http://localhost:8080/LoginServlet">Fazer Login</a>
-        <a href="http://localhost:8080/CadastrarClienteServlet">Fazer Cadastro</a>
-        <a href="http://localhost:8080/CadastrarVendedorServlet">Trabalhe Conosco</a>
+        <a href="http://localhost:8080/LoginServlet" target="centro">Fazer Login</a>
+        <a href="http://localhost:8080/CadastrarVendedorServlet" target="centro">Trabalhe Conosco</a>
     </nav>
 
+    <main>
+        <iframe src="http://localhost:8080/apresentacao.html" name="centro"></iframe>
+    </main>
+    
     <footer>
         <p>Alunos: Jocineudo Oliveira       Jonas Sales         Thais Ribeiro       © 2024</p>
     </footer>

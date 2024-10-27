@@ -13,7 +13,6 @@
 </head>
 <body>
     <h1>Lista de vendedores</h1>
-    <a href="http://localhost:8080/redirecionarMenu.jsp">Retornar para página principal</a>
     <%
         // Configurações da conexão
         ArrayList<Usuario> vendedores = UsuarioDAO.BuscarClientes("vendedor");
@@ -28,7 +27,6 @@
             out.println("<td>" + u.getNome() + "</td>");
             out.println("<td>" + u.getCpf() + "</td>");
             out.println("<td>" + u.getEmail() + "</td>");
-            out.println("<td>" + u.getDatadenascimento() + "</td>");
             out.println("</tr>");
         }
         out.println("</table>");

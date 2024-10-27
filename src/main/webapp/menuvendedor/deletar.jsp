@@ -20,7 +20,7 @@
             <h1>Atualizar</h1>
         </header>
         <nav>
-            <a href="http://localhost:8080/deletar/deletar_conta.jsp" target="centro">Deletar Funcionario</a>
+            <a href="http://localhost:8080/deletar/deletar_outros.jsp" target="centro">Deletar Funcionario</a>
             <a href="http://localhost:8080/deletar/deletar_produto.jsp" target="centro">Deletar produto</a>
             <a href="http://localhost:8080/deletar/deletar_conta.jsp" target="centro">Deletar Conta</a>
             <a href="http://localhost:8080/redirecionarMenu.jsp">Retornar para página principal</a>

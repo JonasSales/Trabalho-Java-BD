@@ -12,7 +12,6 @@
 </head>
 <body>
     <h1>Logs</h1>
-    <a href="http://localhost:8080/redirecionarMenu.jsp">Retornar para página principal</a>
     <%
         ArrayList<Log> logs = LogDAO.BuscarLog();
        

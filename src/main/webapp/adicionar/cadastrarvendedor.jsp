@@ -6,8 +6,9 @@
         <title>Trabalhe conosco</title>
         <link rel="stylesheet" href="http://localhost:8080/style/configuracoesCRUD.css"/>
         <script type="module">
-            import { mascaraCPF } from 'http://localhost:8080/utils.js';
+            import { mascaraCPF, mascaraCNPJ} from 'http://localhost:8080/utils.js';
             window.mascaraCPF = mascaraCPF;
+            window.mascaraCNPJ = mascaraCNPJ;
         </script>
         <link rel="icon" href="http://localhost:8080/lenobrega.jpg" type="image/png">
     </head>
@@ -21,7 +22,7 @@
             <label>Email:</label>
             <input type="email" id="email" name="email" required>
             <label>CNPJ: </label>
-            <input type="text" id="cnpj" name="cnpj" maxlength="18" pattern=".{18,18}" required>
+            <input type="text" id="cnpj" name="cnpj" maxlength="18" pattern=".{18,18}" oninput="mascaraCNPJ(this)" required>
             <label>Cidade: </label>
             <input type="text" id="cidade" name="cidade" maxlength="30"  required>
             <label>Estado:
