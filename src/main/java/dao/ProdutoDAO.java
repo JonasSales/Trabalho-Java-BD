@@ -16,7 +16,7 @@ public class ProdutoDAO {
     private static final String SENHA = "1234";
 
     private static final String INSERT_SQL = "INSERT INTO produtos(id_produto, id_vendedor ,nome_produto, categoria, marca, publico) VALUES (?,?,?,?, ?, ?)";
-    private static final String SELECT_SQL = "select * from produtos where id_vendedor = ? order by id_produto;";
+    private static final String SELECT_SQL = "SELECT * FROM produtos WHERE (CAST(id_produto AS TEXT) LIKE ? and id_vendedor = ?);";
     private static final String UPDATE_SQL = "UPDATE produtos SET nome_produto = ?, categoria= ?, marca= ?, publico = ? WHERE id_produto = ?";
     private static final String DELETE_SQL = "delete from produtos WHERE id_produto= ?";
     private static final String BUSCARPRODUTO_SQL = "SELECT * FROM produtos WHERE (id_produto) = ? AND (id_vendedor = ?)";
@@ -27,30 +27,30 @@ public class ProdutoDAO {
 
     //CRUD
     //READ
-    public static ArrayList BuscarProdutos(int id_vendedor) {
-        ArrayList<Produto> produtos = new ArrayList();
+    public static ArrayList<Produto> BuscarProdutos(String idProduto, int idVendedor) {
+        ArrayList<Produto> produtos = new ArrayList<>();
+        Connection c = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
 
         try {
-
             Driver driver = new Driver();
             DriverManager.registerDriver(driver);
 
-            Connection conectando = (Connection) DriverManager.getConnection(URL, USUARIO, SENHA);
+            c = DriverManager.getConnection(URL, USUARIO, SENHA);
+            statement = c.prepareStatement(SELECT_SQL);
+            statement.setString(1, "%" +  idProduto + "%");
+            statement.setInt(2, idVendedor);
+            resultSet = statement.executeQuery();
 
-            PreparedStatement stmt = conectando.prepareStatement(SELECT_SQL);
-            stmt.setInt(1, id_vendedor);
-
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                int id = rs.getInt("id_produto");
-                String nome = rs.getString("nome_produto");
-                String categoria = rs.getString("categoria");
-                String marca = rs.getString("marca");
-                String publico = rs.getString("publico");
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id_produto");
+                String nome = resultSet.getString("nome_produto");
+                String categoria = resultSet.getString("categoria");
+                String marca = resultSet.getString("marca");
+                String publico = resultSet.getString("publico");
 
                 Produto p = new Produto();
-
                 p.setId_produto(id);
                 p.setNome(nome);
                 p.setCategoria(categoria);
@@ -58,12 +58,23 @@ public class ProdutoDAO {
                 p.setPublico(publico);
                 produtos.add(p);
             }
-
-            stmt.close();
-            conectando.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            // Fechamento seguro dos recursos
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (c != null) {
+                    c.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return produtos;
@@ -181,7 +192,7 @@ public class ProdutoDAO {
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                
+
                 produto.setId_produto(resultSet.getInt("id_produto"));
                 produto.setNome(resultSet.getString("nome_produto"));
                 produto.setCategoria(resultSet.getString("categoria"));
