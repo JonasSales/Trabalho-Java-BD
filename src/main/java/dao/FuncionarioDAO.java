@@ -18,7 +18,7 @@ public class FuncionarioDAO {
 
     private static final String SELECT_SQL = "select * from vw_funcionarios order by id_usuario";
     private static final String SELECT_INDIVIDUAL_SQL = "SELECT * FROM vw_funcionarios where ((email = ?) or (id_usuario= ?))";
-    private static final String UPDATE_SQL = "UPDATE funcionario SET salario = ?, cargo=?, id_patrao = ? WHERE id_funcionario= ?";
+    private static final String UPDATE_SQL = "UPDATE funcionario SET salario = ?, cargo=?, id_patrao = ? WHERE (id_funcionario= ?)";
     private static final String DELETE_SQL = "delete from usuarios WHERE id_usuario= ?";
 
     public static void main(String[] args) {
@@ -40,15 +40,11 @@ public class FuncionarioDAO {
             while (rs.next()) {
 
                 if ((rs.getInt("id_patrao") == a.getId()) || a.getTipodeUsuario().equals(admin)) {
-                    int id = rs.getInt("id_usuario");
-                    String nome = rs.getString("nome");
-                    double salario = rs.getDouble("salario");
-                    String cargo = rs.getString("cargo");
                     Funcionario clt = new Funcionario();
-                    clt.setId(id);
-                    clt.setNome(nome);
-                    clt.setSalario(salario);
-                    clt.setCargo(cargo);
+                    clt.setId(rs.getInt("id_usuario"));
+                    clt.setNome(rs.getString("nome"));
+                    clt.setSalario(rs.getDouble("salario"));
+                    clt.setCargo(rs.getString("cargo"));
                     funcionario.add(clt);
                 }
 
@@ -134,23 +130,14 @@ public class FuncionarioDAO {
             stmt.setInt(2, idFuncionario);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-
-                int id = rs.getInt("id_usuario");
-                String nome = rs.getString("nome");
-                String cpf = rs.getString("cpf");
-                Double salario = rs.getDouble("salario");
-                String cargo = rs.getString("cargo");
-                String emailF = rs.getString("email");
-                int id_patrao = rs.getInt("id_patrao");
-                String tipousuario = rs.getString("tipousuario");
-                u.setId(id);
-                u.setNome(nome);
-                u.setEmail(emailF);
-                u.setCpf(cpf);
-                u.setSalario(salario);
-                u.setCargo(cargo);
-                u.setIdPatrao(id_patrao);
-                u.setTipodeUsuario(tipousuario);
+                u.setId(rs.getInt("id_usuario"));
+                u.setNome(rs.getString("nome"));
+                u.setEmail(rs.getString("email"));
+                u.setCpf(rs.getString("cpf"));
+                u.setSalario(rs.getDouble("salario"));
+                u.setCargo(rs.getString("cargo"));
+                u.setIdPatrao(rs.getInt("id_patrao"));
+                u.setTipodeUsuario(rs.getString("tipousuario"));
             }
 
             stmt.close();
@@ -161,5 +148,4 @@ public class FuncionarioDAO {
         }
         return u;
     }
-    
-}
+    }

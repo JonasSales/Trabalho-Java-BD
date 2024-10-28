@@ -50,7 +50,6 @@ public class AtualizarFuncionarioServlet extends HttpServlet {
         nUsuario.setCpf(cpf);
         nUsuario.setTipodeUsuario("funcionario");
         
-        String teste = "";
         
         boolean inserido = UsuarioDAO.AtualizarUsuario(nUsuario);
         Funcionario nFuncionario = FuncionarioDAO.buscarFuncionario(email, id_funcionario);
@@ -58,6 +57,8 @@ public class AtualizarFuncionarioServlet extends HttpServlet {
         nFuncionario.setId(id_funcionario);
         nFuncionario.setSalario(salario);
         nFuncionario.setCargo(cargo);
+        nFuncionario.setIdPatrao(usuarioLogado.getId());
+        
         
         boolean atualizar= FuncionarioDAO.atualizarFuncionario(nFuncionario);
         boolean log = LogDAO.inserirLog(usuarioLogado, "update", "funcionarios");

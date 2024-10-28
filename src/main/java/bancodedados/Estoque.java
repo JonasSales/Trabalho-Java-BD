@@ -1,25 +1,12 @@
 package bancodedados;
 
-public class Estoque extends Produto{
-
-    
-    
-    
-    protected int id;
+public class Estoque{
     protected int quantidade;
     protected double peso;
     protected String dimensoes;
     protected double preco;
 
-    
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
+   
     public int getQuantidade() {
         return quantidade;
     }

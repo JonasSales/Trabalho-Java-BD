@@ -19,13 +19,11 @@
 <body>
     <%
         Vendedor usuarioLogado = (Vendedor) session.getAttribute("vendedor");
-        if (usuarioLogado != null &&
-             usuarioLogado.getTipodeUsuario().equals("admin") || 
-             usuarioLogado.getTipodeUsuario().equals("vendedor")) {
+        if (usuarioLogado != null && usuarioLogado.getTipodeUsuario().equals("vendedor")) {
     %>
 
     <form method="GET" action="">
-        <label for="idFuncionario">Pesquisar por ID:</label>
+        <label for="idFuncionario">Pesquisar funcionário por ID:</label>
         <input type="number" id="idFuncionario" name="idFuncionario" required>
         <input type="submit" value="Pesquisar">
     </form>
@@ -36,8 +34,7 @@
         
         if (idFuncionarioStr != null && !idFuncionarioStr.isEmpty()) {
             funcionario = FuncionarioDAO.buscarFuncionario(" ", Integer.parseInt(idFuncionarioStr));
-        }
-        if (funcionario != null) {
+            if (funcionario.getIdPatrao() == usuarioLogado.getId()) {
     %>
     <form action="http://localhost:8080/AtualizarFuncionarioServlet" method="post">
         <h2>Atualizar dados do Funcionário</h2>
@@ -60,6 +57,7 @@
     <% 
         } else {
             out.println("<p>Funcionário não encontrado.</p>");
+        }
         }
     } else {
     %>

@@ -1,7 +1,7 @@
 package bancodedados;
 
 
-public class Produto {
+public class Produto extends Estoque{
     protected int id_produto;
     protected int id_vendedor;
     protected String nome;

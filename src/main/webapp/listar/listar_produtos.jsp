@@ -31,14 +31,14 @@
 
         boolean verificadorUm = usuarioLogado.getTipodeUsuario().equals("vendedor");
         boolean verificadorDois = usuarioLogado.getTipodeUsuario().equals("funcionario");
-        int id = 0;
+        int idVendedor = 0;
 
         if (verificadorUm) {
             Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
-            id = vendedor.getId();
+            idVendedor = vendedor.getId();
         } else if (verificadorDois) {
             Funcionario funcionario = (Funcionario) session.getAttribute("funcionario");
-            id = funcionario.getIdPatrao();
+            idVendedor = funcionario.getIdPatrao();
         }
 
         if (verificadorUm || verificadorDois) {
@@ -61,11 +61,10 @@
             ArrayList<Produto> produtos;
             
             boolean verificadorTres = (idProduto != null) && (!idProduto.isEmpty());
-            
             if (verificadorTres) {
-                produtos = ProdutoDAO.BuscarProdutos(idProduto, id);
+                produtos = ProdutoDAO.BuscarProdutos(idProduto, idVendedor);
             } else {
-                produtos = ProdutoDAO.BuscarProdutos("", id);
+                produtos = ProdutoDAO.BuscarProdutos("", idVendedor);
             }
             for (Produto u : produtos) {
                     out.println("<tr>");

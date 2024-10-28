@@ -1,6 +1,8 @@
 <%@page import="bancodedados.Usuario"%>
-<%@ page import="dao.EstoqueDAO" %>
-<%@ page import="bancodedados.Estoque" %>
+<%@page import="bancodedados.Funcionario"%>
+<%@ page import="dao.ProdutoDAO" %>
+<%@ page import="dao.FuncionarioDAO" %>
+<%@ page import="bancodedados.Produto" %>
 <%@ page import="java.util.ArrayList"%>
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -19,16 +21,25 @@
                     : (session.getAttribute("vendedor") != null
                     ? (Usuario) session.getAttribute("vendedor")
                     : (Usuario) session.getAttribute("cliente"));
-
-            if (usuarioLogado != null) {
+            
+            int idVendedor = 0;
+            boolean verificadorUm = usuarioLogado != null && usuarioLogado.getTipodeUsuario().equals("vendedor");
+            boolean verificadorDois = usuarioLogado != null && usuarioLogado.getTipodeUsuario().equals("funcionario");
+            if (verificadorUm) {
+                idVendedor = usuarioLogado.getId();
+            } else if (verificadorDois) {
+                Funcionario funcionario = FuncionarioDAO.buscarFuncionario(usuarioLogado.getEmail(), usuarioLogado.getId());
+                idVendedor = funcionario.getIdPatrao();
+            }
+            if (verificadorUm || verificadorDois) {
         %>
         <h1>Estoque</h1>
         <table>
             <tr><th>ID</th><th>Nome</th><th>Quantidade</th><th>Peso</th><th>Dimensoes</th><th>Preço</th></tr>
-                    <%ArrayList<Estoque> estoque = EstoqueDAO.BuscarEstoque();
-                        for (Estoque u : estoque) {
+            <%ArrayList<Produto> estoque = ProdutoDAO.BuscarProdutos("", idVendedor);
+                        for (Produto u : estoque) {
                             out.println("<tr>");
-                            out.println("<td>" + u.getId() + "</td>");
+                            out.println("<td>" + u.getId_produto() + "</td>");
                             out.println("<td>" + u.getNome() + "</td>");
                             out.println("<td>" + u.getQuantidade() + "</td>");
                             out.println("<td>" + u.getPeso() + "</td>");

@@ -29,8 +29,8 @@ public class CadastrarFuncionarioServlet extends HttpServlet {
     throws ServletException, IOException {
         
         HttpSession session = request.getSession();
-        Usuario usuarioLogado = (Usuario) session.getAttribute("vendedor");
         
+        Usuario usuarioLogado = (Usuario) session.getAttribute("vendedor");
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
         String nome = request.getParameter("nome");

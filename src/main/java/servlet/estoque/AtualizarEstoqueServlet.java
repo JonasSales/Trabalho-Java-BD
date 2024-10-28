@@ -1,9 +1,7 @@
-
 package servlet.estoque;
-
-import bancodedados.Estoque;
+import bancodedados.Produto;
 import bancodedados.Usuario;
-import dao.EstoqueDAO;
+import dao.ProdutoDAO;
 import dao.LogDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -29,6 +27,7 @@ public class AtualizarEstoqueServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
+        int idVendedor = Integer.parseInt(request.getParameter("idVendedor"));
         int quantidade = Integer.parseInt(request.getParameter("quantidade"));
         double peso = Double.parseDouble(request.getParameter("peso"));
         String dimensoes = request.getParameter("dimensoes");
@@ -39,14 +38,15 @@ public class AtualizarEstoqueServlet extends HttpServlet {
                         ? (Usuario) session.getAttribute("vendedor")
                         : (Usuario) session.getAttribute("funcionario");
         
-        Estoque geral = new Estoque();
-        geral.setId(id);
+        Produto geral = new Produto();
+        geral.setId_produto(id);
+        geral.setId_vendedor(idVendedor);
         geral.setQuantidade(quantidade);
         geral.setPeso(peso);
         geral.setDimensoes(dimensoes);
         geral.setPreco(preco);
         
-        boolean inserido = EstoqueDAO.AtualizarEstoque(geral);
+        boolean inserido = ProdutoDAO.AtualizarEstoque(geral);
         boolean log = LogDAO.inserirLog(usuarioLogado, "update", "estoque");
         
         response.setContentType("text/html;charset=UTF-8"); // Definindo o tipo de conteúdo

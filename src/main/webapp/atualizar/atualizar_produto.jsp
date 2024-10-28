@@ -25,7 +25,6 @@
     
     Produto produto = null;
     int idVendedor;
-    
     boolean verificadorUm = usuarioLogado != null && usuarioLogado.getTipodeUsuario().equals("vendedor");
     boolean verificadorDois = usuarioLogado != null && usuarioLogado.getTipodeUsuario().equals("funcionario");
     if (verificadorUm) {
@@ -37,7 +36,7 @@
     if (verificadorUm || verificadorDois) {
 %>
     <form method="GET" action="">
-        <label for="id">Pesquisar por ID:</label>
+        <label for="id">Pesquisar produto por ID:</label>
         <input type="number" id="id" name="id" required>
         <input type="submit" value="Pesquisar">
     </form>
@@ -47,17 +46,16 @@
             produto = ProdutoDAO.BuscarProduto(Integer.parseInt(idProduto), idVendedor);
         }
     }
-
     if (produto != null) {
 %>
-    <form action="http://localhost:8080/AtualizarEstoqueServlet" method="post">
+    <form action="http://localhost:8080/AtualizarProdutoServlet" method="post">
         <h2>Atualizar</h2>
         <label>Nome:</label>
-        <input type="text" id="peso" name="peso" required value="<%= produto.getNome() %>">
+        <input type="text" id="nome" name="nome" required value="<%= produto.getNome() %>">
         <label>Categoria:</label>
-        <input type="text" id="dimensoes" name="dimensoes" required value="<%= produto.getCategoria() %>">
+        <input type="text" id="categoria" name="categoria" required value="<%= produto.getCategoria() %>">
         <label>Marca:</label>
-        <input type="text" id="quantidade" name="quantidade" required value="<%= produto.getMarca() %>">
+        <input type="text" id="marca" name="marca" required value="<%= produto.getMarca() %>">
         <label>Publico:
                 <select  id="publico" name="publico">
                     <option value="Adulto">Adulto</option>
@@ -68,6 +66,7 @@
                   </select>  
               </label>
         <input type="hidden" name="id" value="<%= produto.getId_produto()%>">
+        <input type="hidden" name="idVendedor" value="<%=idVendedor%>">
         <input type="submit" value="Atualizar">
     </form>
 <%

@@ -26,7 +26,8 @@ public class AtualizarProdutoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         
-        int id_produto = Integer.parseInt(request.getParameter("id_produto"));
+        int id_produto = Integer.parseInt(request.getParameter("id"));
+        int idVendedor = Integer.parseInt(request.getParameter("idVendedor"));
         String nome = request.getParameter("nome");
         String categoria = request.getParameter("categoria");
         String marca = request.getParameter("marca");
@@ -34,7 +35,9 @@ public class AtualizarProdutoServlet extends HttpServlet {
         
         Produto geral = new Produto();
         
+        
         geral.setId_produto(id_produto);
+        geral.setId_vendedor(idVendedor);
         geral.setNome(nome);
         geral.setCategoria(categoria);
         geral.setMarca(marca);

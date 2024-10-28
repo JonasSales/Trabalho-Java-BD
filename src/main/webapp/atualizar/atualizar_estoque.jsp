@@ -1,7 +1,7 @@
 <%@page import="bancodedados.Funcionario"%>
 <%@page import="dao.FuncionarioDAO"%>
-<%@page import="dao.EstoqueDAO"%>
-<%@page import="bancodedados.Estoque"%>
+<%@page import="dao.ProdutoDAO"%>
+<%@page import="bancodedados.Produto"%>
 <%@page import="bancodedados.Usuario"%>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -22,13 +22,21 @@
     Usuario usuarioLogado = (Usuario) session.getAttribute("vendedor") != null
             ? (Usuario) session.getAttribute("vendedor")
             : (Usuario) session.getAttribute("funcionario");
-    Estoque estoque = null;
+    Produto estoque = null;
     boolean verificadorUm = usuarioLogado != null && usuarioLogado.getTipodeUsuario().equals("vendedor");
     boolean verificadorDois = usuarioLogado != null && usuarioLogado.getTipodeUsuario().equals("funcionario");
+    int idVendedor;
+    if (verificadorUm) {
+            idVendedor = usuarioLogado.getId();
+        }else{
+        Funcionario funcionario = FuncionarioDAO.buscarFuncionario(usuarioLogado.getEmail(), usuarioLogado.getId());
+        idVendedor = funcionario.getIdPatrao();
+    }
+    
     if (verificadorUm || verificadorDois) {
 %>
     <form method="GET" action="">
-        <label for="id">Pesquisar por ID:</label>
+        <label for="id">Pesquisar estoque por ID:</label>
         <input type="number" id="id" name="id" required>
         <input type="submit" value="Pesquisar">
     </form>
@@ -36,7 +44,7 @@
 <%
         String idEstoque = request.getParameter("id");
         if (idEstoque != null && !idEstoque.isEmpty()) {
-            estoque = EstoqueDAO.BuscarEstoquePorId(Integer.parseInt(idEstoque));
+            estoque = ProdutoDAO.BuscarProduto(Integer.parseInt(idEstoque), idVendedor);
         }
     }
 
@@ -45,17 +53,18 @@
     <form action="http://localhost:8080/AtualizarEstoqueServlet" method="post">
         <h2>Atualizar</h2>
         <label>Nome:</label>
-        <input type="text" id="nome" name="nome" required value="<%= estoque.getNome() %>">
+        <input type="text" id="nome" name="nome" required value="<%= estoque.getNome()%>">
         <label>Peso:</label>
-        <input type="text" id="peso" name="peso" required value="<%= estoque.getPeso() %>">
+        <input type="text" id="peso" name="peso" required value="<%= estoque.getPeso()%>">
         <label>Dimensões:</label>
-        <input type="text" id="dimensoes" name="dimensoes" required value="<%= estoque.getDimensoes() %> " oninput="mascaraDimensoes(this)"
+        <input type="text" id="dimensoes" name="dimensoes" required value="<%= estoque.getDimensoes()%>" oninput="mascaraDimensoes(this)"
                maxlength="8" pattern=".{8,8}">
         <label>Preço:</label>
         <input type="text" id="preco" name="preco" required value="<%= estoque.getPreco() %>">
         <label>Quantidade:</label>
-        <input type="text" id="quantidade" name="quantidade" required value="<%= estoque.getQuantidade() %>">
-        <input type="hidden" name="id" value="<%= estoque.getId() %>">
+        <input type="number" id="quantidade" name="quantidade" required value="<%=estoque.getQuantidade()%>">
+        <input type="hidden" name="id" value="<%= estoque.getId_produto()%>">
+        <input type="hidden" name="idVendedor" value="<%= estoque.getId_vendedor()%>">
         <input type="submit" value="Atualizar">
     </form>
 <%

@@ -22,7 +22,6 @@
                     : (Usuario) session.getAttribute("cliente");
             if (usuarioLogado != null) {
                 String tipoUsuario = usuarioLogado.getTipodeUsuario();
-
                 if (tipoUsuario.equals("admin")) {
         %>
         <script>
