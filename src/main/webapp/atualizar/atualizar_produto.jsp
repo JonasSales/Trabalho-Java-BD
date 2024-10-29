@@ -43,7 +43,7 @@
 <%
         String idProduto = request.getParameter("id");
         if (idProduto != null && !idProduto.isEmpty()) {
-            produto = ProdutoDAO.BuscarProduto(Integer.parseInt(idProduto), idVendedor);
+            produto = ProdutoDAO.BuscarProduto(Long.parseLong(idProduto), idVendedor);
         }
     }
     if (produto != null) {

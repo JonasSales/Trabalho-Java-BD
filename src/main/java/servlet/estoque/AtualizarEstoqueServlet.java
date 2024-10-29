@@ -26,7 +26,7 @@ public class AtualizarEstoqueServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
+        long id = Long.parseLong(request.getParameter("id"));
         int idVendedor = Integer.parseInt(request.getParameter("idVendedor"));
         int quantidade = Integer.parseInt(request.getParameter("quantidade"));
         double peso = Double.parseDouble(request.getParameter("peso"));

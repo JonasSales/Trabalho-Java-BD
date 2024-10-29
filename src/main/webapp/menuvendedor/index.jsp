@@ -21,6 +21,7 @@
             <a href="http://localhost:8080/menuvendedor/adicionar.jsp">Menu adicionar</a>
             <a href="http://localhost:8080/menuvendedor/atualizar.jsp">Menu atualizar</a>
             <a href="http://localhost:8080/menuvendedor/listar.jsp">Menu listar</a>
+            <a href="http://localhost:8080/vendas/registrarvendas.jsp">Registrar vendas</a>
             <a href="http://localhost:8080/menuvendedor/deletar.jsp">Menu Deletar</a>
             
            

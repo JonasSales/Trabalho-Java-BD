@@ -44,7 +44,7 @@
 <%
         String idEstoque = request.getParameter("id");
         if (idEstoque != null && !idEstoque.isEmpty()) {
-            estoque = ProdutoDAO.BuscarProduto(Integer.parseInt(idEstoque), idVendedor);
+            estoque = ProdutoDAO.BuscarProduto(Long.parseLong(idEstoque), idVendedor);
         }
     }
 

@@ -35,7 +35,6 @@ public class AtualizarProdutoServlet extends HttpServlet {
         
         Produto geral = new Produto();
         
-        
         geral.setId_produto(id_produto);
         geral.setId_vendedor(idVendedor);
         geral.setNome(nome);

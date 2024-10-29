@@ -16,7 +16,7 @@ public class ProdutoDAO {
     private static final String SENHA = "1234";
 
     private static final String INSERT_SQL = "INSERT INTO produtos(id_produto, id_vendedor ,nome_produto, categoria, marca, publico) VALUES (?,?,?,?, ?, ?)";
-    private static final String SELECT_SQL = "SELECT * FROM vw_produtos_estoque WHERE ((CAST(id_produto AS TEXT) LIKE ? or nome_produto like ?) and id_vendedor = ?);";
+    private static final String SELECT_SQL = "SELECT * FROM vw_produtos_estoque WHERE ((CAST(id_produto AS TEXT) LIKE ? or nome_produto like ?) and (id_vendedor = ?) and (quantidade >= 0));";
     private static final String UPDATEPRODUTO_SQL = "UPDATE produtos SET nome_produto = ?, categoria= ?, marca= ?, publico = ? WHERE ((id_produto = ?) and (id_vendedor = ?))";
     private static final String UPDATEESTOQUE_SQL = "UPDATE estoque SET quantidade= ?, peso= ?, dimensoes= ?, preco= ? WHERE ((id_produto = ?) and (id_vendedor = ?))";
     private static final String DELETE_SQL = "delete from produtos WHERE id_produto= ?";
@@ -48,7 +48,7 @@ public class ProdutoDAO {
 
             while (resultSet.next()) {
                 Produto produto = new Produto();
-                produto.setId_produto(resultSet.getInt("id_produto"));
+                produto.setId_produto(resultSet.getLong("id_produto"));
                 produto.setNome(resultSet.getString("nome_produto"));
                 produto.setCategoria(resultSet.getString("categoria"));
                 produto.setMarca(resultSet.getString("marca"));
@@ -92,8 +92,8 @@ public class ProdutoDAO {
             Connection c = (Connection) DriverManager.getConnection(URL, USUARIO, SENHA);
             PreparedStatement stmt = c.prepareStatement(INSERT_SQL);
 
-            stmt.setInt(1, produto.getId_produto());
-            stmt.setInt(2, produto.getId_vendedor());
+            stmt.setLong(1, produto.getId_produto());
+            stmt.setLong(2, produto.getId_vendedor());
             stmt.setString(3, produto.getNome());
             stmt.setString(4, produto.getCategoria());
             stmt.setString(5, produto.getMarca());
@@ -129,8 +129,8 @@ public class ProdutoDAO {
             stmt.setString(2, produto.getCategoria());
             stmt.setString(3, produto.getMarca());
             stmt.setString(4, produto.getPublico());
-            stmt.setInt(5, produto.getId_produto());
-            stmt.setInt(6, produto.getId_vendedor());
+            stmt.setLong(5, produto.getId_produto());
+            stmt.setLong(6, produto.getId_vendedor());
 
             int rowsAffect = stmt.executeUpdate();
 
@@ -158,7 +158,7 @@ public class ProdutoDAO {
             Connection c = (Connection) DriverManager.getConnection(URL, USUARIO, SENHA);
 
             PreparedStatement stmt = c.prepareStatement(DELETE_SQL);
-            stmt.setInt(1, produto.getId_produto());
+            stmt.setLong(1, produto.getId_produto());
 
             int rowsAffect = stmt.executeUpdate();
 
@@ -177,7 +177,7 @@ public class ProdutoDAO {
 
     }
 
-    public static Produto BuscarProduto(int idProduto, int idVendedor) {
+    public static Produto BuscarProduto(long idProduto, int idVendedor) {
         Produto produto = new Produto();
         Connection c = null;
         PreparedStatement statement = null;
@@ -189,13 +189,13 @@ public class ProdutoDAO {
             c = DriverManager.getConnection(URL, USUARIO, SENHA);
 
             statement = c.prepareStatement(BUSCARPRODUTO_SQL);
-            statement.setInt(1, idProduto);
+            statement.setLong (1, idProduto);
             statement.setInt(2, idVendedor);
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 
-                produto.setId_produto(resultSet.getInt("id_produto"));
+                produto.setId_produto(resultSet.getLong("id_produto"));
                 produto.setId_vendedor(resultSet.getInt("id_vendedor"));
                 produto.setNome(resultSet.getString("nome_produto"));
                 produto.setCategoria(resultSet.getString("categoria"));
@@ -241,8 +241,8 @@ public class ProdutoDAO {
         stmt.setDouble(2, estoque.getPeso());
         stmt.setString(3, estoque.getDimensoes());
         stmt.setDouble(4, estoque.getPreco());
-        stmt.setInt(5, estoque.getId_produto());
-        stmt.setInt(6, estoque.getId_vendedor());
+        stmt.setLong(5, estoque.getId_produto());
+        stmt.setLong(6, estoque.getId_vendedor());
 
         int rowsAffect = stmt.executeUpdate();
         sucesso = rowsAffect > 0;

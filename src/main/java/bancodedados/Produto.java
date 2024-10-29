@@ -2,14 +2,14 @@ package bancodedados;
 
 
 public class Produto extends Estoque{
-    protected int id_produto;
+    protected long id_produto;
     protected int id_vendedor;
     protected String nome;
     protected String categoria;
     protected String marca;
     protected String publico;
 
-    public int getId_produto() {
+    public long getId_produto() {
         return id_produto;
     }
 
@@ -21,7 +21,7 @@ public class Produto extends Estoque{
         this.id_vendedor = id_vendedor;
     }
     
-    public void setId_produto(int id_produto) {
+    public void setId_produto(long id_produto) {
         this.id_produto = id_produto;
     }
 
