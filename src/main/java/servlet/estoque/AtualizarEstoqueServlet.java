@@ -67,7 +67,6 @@ public class AtualizarEstoqueServlet extends HttpServlet {
             
             if (inserido && log) {
                 out.println("<h1>Estoque atualizado com sucesso!</h1>");
-                out.println("<p>Você será redirecionado para a página principal em 5 segundos...</p>");
             } else {
                 out.println("<h1>Erro ao atualizar o estoque.</h1>");
                 out.println("<p>Certifique-se que você preencheu corretamente.</p>");

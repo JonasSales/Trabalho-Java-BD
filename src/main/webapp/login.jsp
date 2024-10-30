@@ -20,10 +20,12 @@
             <input type="password" id="senha" name="senha"
                    required>
             <input type="submit" value="Entrar no sistema">
-            <%if (erro != null) {
-                    out.print(erro);
+
+        </form>
+                    <%if (erro != null) {
+             out.println("<h1>" + erro + "</h1>");
+
                 }
             %>
-        </form>
     </body>
 </html>

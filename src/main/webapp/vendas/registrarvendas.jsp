@@ -75,7 +75,7 @@
         
         <br><br>
         <form method="post" action="http://localhost:8080/RenovarEstoqueServlet">
-            <input type="submit" value="Confirmar saída de estoque  ">
+            <input type="submit" value="Confirmar saída de estoque  " download>
         </form>
         <br><br>
         <form method="GET" action="">

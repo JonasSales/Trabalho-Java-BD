@@ -75,13 +75,16 @@ public class CadastrarVendedorServlet extends HttpServlet {
                 out.println("<script>");
                 out.println("setTimeout(function() {");
                 out.println("window.location.href = 'http://localhost:8080/LoginServlet';"); // Substitua pela sua página principal
-                out.println("}, 5000);"); // Redireciona após 5 segundos
+                out.println("}, 1000);"); // Redireciona após 5 segundos
                 out.println("</script>");
                 out.println("<h1>Você foi cadastrado com sucesso!</h1>");
-                out.println("<p>Você será redirecionado para a página de login em 5 segundos...</p>");
             } else {
-                out.println("<h1>Esse email já está sendo usado</h1>");
-                out.println("<p>Tente novamente.</p>");
+                out.println("<p>Esse email já existe.</p>");
+                out.println("<script>");
+                out.println("setTimeout(function() {");
+                out.println("window.location.href = 'http://localhost:8080/CadastrarVendedorServlet';"); // Substitua pela sua página principal
+                out.println("}, 2000);"); 
+                out.println("</script>");
             }
             out.println("</body>");
             out.println("</html>");

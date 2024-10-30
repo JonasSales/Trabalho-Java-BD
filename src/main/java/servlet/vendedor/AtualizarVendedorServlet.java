@@ -25,12 +25,7 @@ public class AtualizarVendedorServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        
-        HttpSession session = request.getSession();
-        Vendedor usuarioLogado = (Vendedor) session.getAttribute("vendedor") != null
-                        ? (Vendedor) session.getAttribute("vendedor")
-                        : (Vendedor) session.getAttribute("admin");
-        
+        Usuario adminLogado = new Usuario();
         
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
@@ -41,9 +36,18 @@ public class AtualizarVendedorServlet extends HttpServlet {
         String estado = request.getParameter("estado");
         String admin = "admin";
         
+        
+        HttpSession session = request.getSession();
+        Vendedor usuarioLogado = (Vendedor) session.getAttribute("vendedor");
+        int id = 0;
+        if (usuarioLogado == null) {
+             id = Integer.parseInt(request.getParameter("id"));
+            adminLogado = (Usuario) session.getAttribute("admin");
+            
+        }
         Vendedor nUsuario = new Vendedor();
         
-        nUsuario.setId(usuarioLogado.getId());
+        nUsuario.setId(id);
         nUsuario.setEmail(email);
         nUsuario.setSenha(senha);
         nUsuario.setNome(nome);
@@ -55,12 +59,11 @@ public class AtualizarVendedorServlet extends HttpServlet {
 
         boolean inserido = false; 
         boolean log = false;
-        if (usuarioLogado.getTipodeUsuario().equals(admin)) {
-            int id = Integer.parseInt(request.getParameter("id_vendedor"));
+        if (adminLogado.getTipodeUsuario().equals(admin)) {
             nUsuario.setId(id);
             nUsuario.setTipodeUsuario("vendedor");
             inserido = UsuarioDAO.AtualizarUsuario(nUsuario);
-            log = LogDAO.inserirLog(usuarioLogado, "update", "vendedor");
+            log = LogDAO.inserirLog(adminLogado, "update", "vendedor");
         }
         else{
             nUsuario.setId(usuarioLogado.getId());

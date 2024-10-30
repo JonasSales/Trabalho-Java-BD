@@ -36,7 +36,7 @@ public class AtualizarClienteServlet extends HttpServlet {
         String cpf = request.getParameter("cpf");
         String email = request.getParameter("email");
 
-        Usuario geral = new Usuario();
+        Usuario geral = UsuarioDAO.buscarUsuario(email, 0);
 
         geral.setNome(nome);
         geral.setCpf(cpf);
@@ -45,7 +45,7 @@ public class AtualizarClienteServlet extends HttpServlet {
         boolean inserido = false;
         boolean log = false;
 
-        inserido = UsuarioDAO.AtualizarUsuario(UsuarioDAO.buscarUsuario(email, 0));
+        inserido = UsuarioDAO.AtualizarUsuario(geral);
         log = LogDAO.inserirLog(usuarioLogado, "update", "usuarios");
 
         response.setContentType("text/html;charset=UTF-8"); // Definindo o tipo de conteúdo

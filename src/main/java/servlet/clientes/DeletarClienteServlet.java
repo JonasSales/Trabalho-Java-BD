@@ -26,7 +26,7 @@ public class DeletarClienteServlet extends HttpServlet {
             throws ServletException, IOException {
         int id_cliente = Integer.parseInt(request.getParameter("id"));
         HttpSession session = request.getSession();
-        boolean verificadorAdmin = false;
+        boolean verificador = false;
         boolean log = false;
 
         if (session.getAttribute("funcionario") != null) {
@@ -37,11 +37,12 @@ public class DeletarClienteServlet extends HttpServlet {
         } else if (session.getAttribute("admin") != null) {
 
             Usuario usuarioLogado = (Usuario) session.getAttribute("admin");
-            verificadorAdmin = usuarioLogado.getTipodeUsuario().equals("admin");
+            verificador = true;
             log = LogDAO.inserirLog(usuarioLogado, "delete", "usuarios");
             
         } else if (session.getAttribute("vendedor") != null) {
 
+            verificador = true;
             Usuario usuarioLogado = (Usuario) session.getAttribute("vendedor");
             log = LogDAO.inserirLog(usuarioLogado, "delete", "usuarios");
 
@@ -62,7 +63,7 @@ public class DeletarClienteServlet extends HttpServlet {
                 out.println("<head><title>Deletação Concluída</title></head>");
                 out.println("<body>");
                 out.println("<h1>Deletado com sucesso</h1>");
-                if (!verificadorAdmin) {
+                if (!verificador) {
                     session.invalidate();
                     out.println("<script>");
                     out.println("window.top.location.href = 'http://localhost:8080/LogoutServlet';"); // Redireciona a página principal

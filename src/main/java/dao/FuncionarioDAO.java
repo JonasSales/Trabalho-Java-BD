@@ -17,9 +17,9 @@ public class FuncionarioDAO {
     private static final String SENHA = "1234";
 
     private static final String SELECT_SQL = "select * from vw_funcionarios order by id_usuario";
-    private static final String SELECT_INDIVIDUAL_SQL = "SELECT * FROM vw_funcionarios where ((email = ?) or (id_usuario= ?))";
+    private static final String SELECT_INDIVIDUAL_SQL = "SELECT * FROM vw_funcionarios where (((email = ?) or (id_usuario= ?)) and (ativo = true))";
     private static final String UPDATE_SQL = "UPDATE funcionario SET salario = ?, cargo=?, id_patrao = ? WHERE (id_funcionario= ?)";
-    private static final String DELETE_SQL = "delete from usuarios WHERE id_usuario= ?";
+    private static final String DELETE_SQL = "update usuarios set ativo = false, email = id_usuario WHERE (id_usuario= ?)";
 
     public static void main(String[] args) {
         

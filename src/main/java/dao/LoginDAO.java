@@ -15,7 +15,7 @@ public class LoginDAO {
     private static final String USUARIO = "postgres"; // seu usuário
     private static final String SENHA = "1234";
 
-    private static final String SELECTPOREMAIL_SQL = "select email,senha,tipousuario from usuarios where email = ?";
+    private static final String SELECTPOREMAIL_SQL = "select email,senha,tipousuario from usuarios where (email = ?) and (ativo = true)";
 
     public static Login BuscarUsuarioPorEmail(String email) {
         Login u = new Login();

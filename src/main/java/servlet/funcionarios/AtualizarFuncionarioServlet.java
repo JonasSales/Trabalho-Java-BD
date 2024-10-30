@@ -81,7 +81,6 @@ public class AtualizarFuncionarioServlet extends HttpServlet {
             
             if (inserido && log && atualizar) {
                 out.println("<h1>Funcionario atualizado com sucesso!</h1>");
-                out.println("<p>Você será redirecionado para a página de login em 5 segundos...</p>");
             } else {
                 out.println("<h1>Erro ao realizar cadastro.</h1>");
                 out.println("<p>Tente novamente.</p>");

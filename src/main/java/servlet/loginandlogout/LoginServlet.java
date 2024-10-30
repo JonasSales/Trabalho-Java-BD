@@ -73,7 +73,7 @@ public class LoginServlet extends HttpServlet {
             }
         }
         else{
-            request.setAttribute("erro", "email/senha incorretos");
+            request.setAttribute("erro", "EMAIL OU SENHA INCORRETOS");
             RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
             rd.forward(request, response);
         }

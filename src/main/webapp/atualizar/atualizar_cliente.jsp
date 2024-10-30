@@ -29,7 +29,7 @@
     boolean verificadorDois = usuarioLogado.getTipodeUsuario().equals("admin");
     boolean verificadorTres = usuarioLogado.getTipodeUsuario().equals("vendedor");
 
-    if (verificadorUm || verificadorDois || verificadorTres) {
+    if ( verificadorUm||verificadorDois || verificadorTres) {
 %>
     <h2>Atualização</h2>
     <% if (verificadorDois) { %>
@@ -48,7 +48,7 @@
             }
             if (vendedor != null) {
         %>
-            <form action="http://localhost:8080/AtualizarVendedorServlet" method="post">
+            <form action="http://localhost:8080/AtualizarClienteServlet" method="post">
                 <label>Nome:</label>
                 <input type="text" id="nome" name="nome" required value="<%= vendedor.getNome()%>">
                 <label>Email:</label>
@@ -67,7 +67,7 @@
     <% } else if (verificadorUm || verificadorTres) {
     Usuario funcionarioLogado = UsuarioDAO.buscarUsuario(" ", usuarioLogado.getId());
     %>
-        <form action="http://localhost:8080/AtualizarVendedorServlet" method="post">
+        <form action="http://localhost:8080/AtualizarClienteServlet" method="post">
             <label>Nome:</label>
             <input type="text" id="nome" name="nome" required value="<%= funcionarioLogado.getNome()%>">
             <label>CPF: </label>

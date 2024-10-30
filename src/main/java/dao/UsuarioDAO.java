@@ -15,11 +15,11 @@ public class UsuarioDAO {
     private static final String USUARIO = "postgres"; // seu usuário
     private static final String SENHA = "1234";
 
-    private static final String SELECT_SQL = "SELECT id_usuario, nome, cpf, email, datadenascimento FROM usuarios where tipousuario = ? order by id_usuario; ";
+    private static final String SELECT_SQL = "SELECT id_usuario, nome, cpf, email FROM usuarios where (tipousuario = ?) and (ativo = true) order by id_usuario; ";
     private static final String INSERT_SQL = "INSERT INTO usuarios (email, senha, nome, cpf, tipousuario)  VALUES (?,?,?, ?, ?)";
     private static final String SELECTINDIVIDUAL = "select * from usuarios where (email = ?) or (id_usuario = ?)";
-    private static final String UPDATE_SQL = "UPDATE usuarios SET nome = ?, cpf = ?, email = ?, tipousuario = ?  WHERE id_usuario = ?";
-    private static final String DELETE_SQL = "delete from usuarios WHERE id_usuario= ?";
+    private static final String UPDATE_SQL = "UPDATE usuarios SET nome = ?, cpf = ?, email = ?, tipousuario = ?, ativo = true WHERE id_usuario = ?";
+    private static final String DELETE_SQL = "update usuarios set ativo = false, email = id_usuario WHERE id_usuario= ?";
 
     public static void main(String[] args) {
         
@@ -50,7 +50,6 @@ public class UsuarioDAO {
             c.setEmail(email);
             clientes.add(c);
         }
-        
         stmt.close();
         conectando.close();
         
@@ -108,24 +107,25 @@ public class UsuarioDAO {
             DriverManager.registerDriver(driver);
             Connection c = (Connection) DriverManager.getConnection(URL, USUARIO, SENHA);
             PreparedStatement stmt = c.prepareStatement(INSERT_SQL);
-
+            
             stmt.setString(1, usuario.getEmail());
             stmt.setString(2, usuario.getSenha());
             stmt.setString(3, usuario.getNome());
             stmt.setString(4, usuario.getCpf());
             stmt.setString(5, usuario.getTipodeUsuario());
+            
+            
 
             int rowsAffect = stmt.executeUpdate();
-
             if (rowsAffect > 0) {
                 sucesso = true;
             }
-
             stmt.close();
             c.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
+            
         }
         return sucesso;
     }

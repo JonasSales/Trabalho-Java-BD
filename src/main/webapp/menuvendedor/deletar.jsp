@@ -17,7 +17,7 @@
             if (verificadorUm || verificadorDois) {
         %>
         <header>
-            <h1>Atualizar</h1>
+            <h1>Deletar</h1>
         </header>
         <nav>
             <a href="http://localhost:8080/deletar/deletar_outros.jsp" target="centro">Deletar Funcionario</a>

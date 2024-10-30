@@ -11,22 +11,23 @@
     </head>
     <body>
         <%
-            
+
             Usuario usuarioLogado = (Usuario) session.getAttribute("funcionario");
-            
+
             boolean verificador = usuarioLogado.getTipodeUsuario().equals("funcionario");
-            
+
             if (verificador) {
         %>
         <header>
             <h1>Menu Funcionario</h1>
         </header>
         <nav>
-            <a href="http://localhost:8080/atualizar/atualizar_cliente.jsp" target="centro">Atualizar dados</a>
+
             <a href="http://localhost:8080/atualizar/atualizar_produto.jsp" target="centro">Atualizar produto</a>
             <a href="http://localhost:8080/atualizar/atualizar_estoque.jsp" target="centro">Atualizar estoque</a>
-            <a href="http://localhost:8080/listar/listar_estoque.jsp">Listar Estoque</a>
-            <a href="http://localhost:8080/listar/listar_produtos.jsp">Listar Produtos</a>
+            <a href="http://localhost:8080/listar/listar_estoque.jsp" target="centro">Listar Estoque</a>
+            <a href="http://localhost:8080/listar/listar_produtos.jsp" target="centro">Listar Produtos</a>
+            <a href="http://localhost:8080/atualizar/atualizar_cliente.jsp" target="centro">Atualizar dados</a>
             <a href="http://localhost:8080/LogoutServlet">Sair</a>
         </nav>
         <main>
