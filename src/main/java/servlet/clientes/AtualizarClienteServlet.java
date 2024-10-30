@@ -26,17 +26,15 @@ public class AtualizarClienteServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
 
-        Usuario usuarioLogado = (Usuario) session.getAttribute("funcionario") != null
-                ? (Usuario) session.getAttribute("funcionario")
-                : (session.getAttribute("admin") != null
-                ? (Usuario) session.getAttribute("admin")
-                : (Usuario) session.getAttribute("cliente"));
+        Usuario usuarioLogado = (Usuario) session.getAttribute("funcionario");
 
+        int id = Integer.parseInt(request.getParameter("id"));
         String nome = request.getParameter("nome");
         String cpf = request.getParameter("cpf");
         String email = request.getParameter("email");
 
-        Usuario geral = UsuarioDAO.buscarUsuario(email, 0);
+        
+        Usuario geral = UsuarioDAO.buscarUsuario("", id);
 
         geral.setNome(nome);
         geral.setCpf(cpf);

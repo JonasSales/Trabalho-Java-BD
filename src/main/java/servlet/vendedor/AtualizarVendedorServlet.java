@@ -33,6 +33,7 @@ public class AtualizarVendedorServlet extends HttpServlet {
                 : (Usuario) session.getAttribute("admin");
 
         String email = request.getParameter("email");
+        int id = Integer.parseInt(request.getParameter("id"));
         String senha = request.getParameter("senha");
         String nome = request.getParameter("nome");
         String cpf = request.getParameter("cpf");
@@ -41,10 +42,9 @@ public class AtualizarVendedorServlet extends HttpServlet {
         String estado = request.getParameter("estado");
         String admin = "admin";
 
-        int id = 0;
-        Vendedor nUsuario = new Vendedor();
 
-        nUsuario.setId(id);
+        Vendedor nUsuario = VendedorDAO.buscarVendedor(email, id);
+
         nUsuario.setEmail(email);
         nUsuario.setSenha(senha);
         nUsuario.setNome(nome);

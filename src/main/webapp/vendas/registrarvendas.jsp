@@ -69,7 +69,6 @@
             <%
                 }
             } else {%>
-            <h1>CHORA BOY</h1>
             <%}%>
         </table>
         
@@ -98,6 +97,9 @@
                         ? ProdutoDAO.BuscarProdutos(idProduto, idVendedor)
                         : ProdutoDAO.BuscarProdutos("", idVendedor);
                 for (Produto produto : produtos) {
+                if (produto.getQuantidade() > 0) {
+                        
+                    
             %>
             <tr>
                 <td><%= produto.getId_produto()%></td>
@@ -109,11 +111,12 @@
                         <input type="hidden" name="idDoProduto" value="<%= produto.getId_produto()%>">
                         <input type="hidden" name="idDoVendedor" value="<%= idVendedor%>">
                         <input type="number" name="quantidade" required min="1" pattern="^[0-9]+">
-                        <input type="submit" value="Adicionar ao carrinho">
+                        <input type="submit" value="Registrar na saída">
                     </form>
                 </td>
             </tr>
             <%
+                }
                 }
             %>   
         </table>

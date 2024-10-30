@@ -18,7 +18,7 @@ public class UsuarioDAO {
     private static final String SELECT_SQL = "SELECT id_usuario, nome, cpf, email FROM usuarios where (tipousuario = ?) and (ativo = true) order by id_usuario; ";
     private static final String INSERT_SQL = "INSERT INTO usuarios (email, senha, nome, cpf, tipousuario)  VALUES (?,?,?, ?, ?)";
     private static final String SELECTINDIVIDUAL = "select * from usuarios where (email = ?) or (id_usuario = ?)";
-    private static final String UPDATE_SQL = "UPDATE usuarios SET nome = ?, cpf = ?, email = ?, ativo = true WHERE id_usuario = ?";
+    private static final String UPDATE_SQL = "UPDATE usuarios SET nome = ?, cpf = ?, email = ? WHERE id_usuario = ?";
     private static final String DELETE_SQL = "update usuarios set ativo = false, email = id_usuario WHERE id_usuario= ?";
 
     public static void main(String[] args) {
@@ -38,16 +38,12 @@ public class UsuarioDAO {
         stmt.setString(1, tipoUsuario);
         ResultSet rs = stmt.executeQuery();   
         while(rs.next()){
-            int id = rs.getInt("id_usuario");
-            String nome = rs.getString("nome");
-            String cpf = rs.getString("cpf");
-            String email = rs.getString("email");
             Usuario c = new Usuario();
             
-            c.setId(id);
-            c.setNome(nome);
-            c.setCpf(cpf);
-            c.setEmail(email);
+            c.setId(rs.getInt("id_usuario"));
+            c.setNome(rs.getString("nome"));
+            c.setCpf(rs.getString("cpf"));
+            c.setEmail(rs.getString("email"));
             clientes.add(c);
         }
         stmt.close();

@@ -57,7 +57,6 @@ public class DeletarProdutoServlet extends HttpServlet {
             
             if (inserido && log) {
                 out.println("<h1>Produto deletado com sucesso!</h1>");
-                out.println("<p>Você será redirecionado para a página principal em 5 segundos...</p>");
             } else {
                 out.println("<h1>Erro ao deletar produto.</h1>");
                 out.println("<p>Por favor verifique se o id: " +  geral.getId_produto()  + " está presente na tabela produtos.</p>");

@@ -1,62 +1,86 @@
-<%@page import="bancodedados.Usuario"%>
 <%@page import="bancodedados.Funcionario"%>
-<%@ page import="dao.ProdutoDAO" %>
-<%@ page import="dao.FuncionarioDAO" %>
-<%@ page import="bancodedados.Produto" %>
-<%@ page import="java.util.ArrayList"%>
+<%@page import="bancodedados.Usuario"%>
+<%@page import="bancodedados.Vendedor"%>
+<%@page import="java.sql.*" %>
+<%@page import="dao.ProdutoDAO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="bancodedados.Produto"%>
+
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Produtos</title>
-        <link rel="stylesheet" href="http://localhost:8080/style/configuracoesTabelas.css"/>
-        <link rel="icon" href="http://localhost:8080/lenobrega.jpg" type="image/png">
-    </head>
-    <body>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Listar estoque</title>
+    <link rel="stylesheet" href="http://localhost:8080/style/configuracoesTabelas.css"/>
+    <link rel="icon" href="http://localhost:8080/lenobrega.jpg" type="image/png">
+</head>
+<body>
+    <h1>Produtos em estoque</h1>
 
+    <%
+        // Verificar se a sessão é nula ou não contém o usuário logado
+        if (session.getAttribute("vendedor") == null && session.getAttribute("funcionario") == null) {
+            response.sendRedirect("login.jsp"); // Redirecionar para a página de login
+            return;
+        }
+
+        Usuario usuarioLogado = (Usuario) session.getAttribute("vendedor") != null
+                ? (Vendedor) session.getAttribute("vendedor")
+                : (Funcionario) session.getAttribute("funcionario");
+
+        boolean verificadorUm = usuarioLogado.getTipodeUsuario().equals("vendedor");
+        boolean verificadorDois = usuarioLogado.getTipodeUsuario().equals("funcionario");
+        int idVendedor = 0;
+
+        if (verificadorUm) {
+            Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
+            idVendedor = vendedor.getId();
+        } else if (verificadorDois) {
+            Funcionario funcionario = (Funcionario) session.getAttribute("funcionario");
+            idVendedor = funcionario.getIdPatrao();
+        }
+
+        if (verificadorUm || verificadorDois) {
+    %>
+    <form method="GET" action="">
+        <label for="idProduto">Pesquisar por ID ou nome:</label>
+        <input type="text" id="idProduto" name="idProduto" >
+        <input type="submit" value="Pesquisar">
+    </form>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Quantidade</th>
+            <th>Peso</th>
+            <th>Dimensões</th>
+            <th>Preço</th>
+        </tr>
         <%
-            Usuario usuarioLogado = (Usuario) session.getAttribute("funcionario") != null
-                    ? (Usuario) session.getAttribute("funcionario")
-                    : (session.getAttribute("vendedor") != null
-                    ? (Usuario) session.getAttribute("vendedor")
-                    : (Usuario) session.getAttribute("cliente"));
+            String idProduto = request.getParameter("idProduto");
+            ArrayList<Produto> produtos;
             
-            int idVendedor = 0;
-            boolean verificadorUm = usuarioLogado != null && usuarioLogado.getTipodeUsuario().equals("vendedor");
-            boolean verificadorDois = usuarioLogado != null && usuarioLogado.getTipodeUsuario().equals("funcionario");
-            if (verificadorUm) {
-                idVendedor = usuarioLogado.getId();
-            } else if (verificadorDois) {
-                Funcionario funcionario = FuncionarioDAO.buscarFuncionario(usuarioLogado.getEmail(), usuarioLogado.getId());
-                idVendedor = funcionario.getIdPatrao();
+            boolean verificadorTres = (idProduto != null) && (!idProduto.isEmpty());
+            if (verificadorTres) {
+                produtos = ProdutoDAO.BuscarProdutos(idProduto, idVendedor);
+            } else {
+                produtos = ProdutoDAO.BuscarProdutos("", idVendedor);
             }
-            if (verificadorUm || verificadorDois) {
+            for (Produto u : produtos) {
+                    out.println("<tr>");
+                    out.println("<td>" + u.getId_produto() + "</td>");
+                    out.println("<td>" + u.getNome() + "</td>");
+                    out.println("<td>" + u.getQuantidade() + "</td>");
+                    out.println("<td>" + u.getPeso() + "</td>");
+                    out.println("<td>" + u.getDimensoes() + "</td>");
+                    out.println("<td>" + u.getPreco() + "</td>");
+                    out.println("</tr>");
+                }
         %>
-        <h1>Estoque</h1>
-        <table>
-            <tr><th>ID</th><th>Nome</th><th>Quantidade</th><th>Peso</th><th>Dimensoes</th><th>Preço</th></tr>
-            <%ArrayList<Produto> estoque = ProdutoDAO.BuscarProdutos("", idVendedor);
-                        for (Produto u : estoque) {
-                            out.println("<tr>");
-                            out.println("<td>" + u.getId_produto() + "</td>");
-                            out.println("<td>" + u.getNome() + "</td>");
-                            out.println("<td>" + u.getQuantidade() + "</td>");
-                            out.println("<td>" + u.getPeso() + "</td>");
-                            out.println("<td>" + u.getDimensoes() + "</td>");
-                            out.println("<td>" + u.getPreco() + "</td>");
-                            out.println("</tr>");
-                        }
-                    } else {%>
-            <div>
-                Você não tem permissão para acessar esta página. Por favor, entre como vendedor ou funcionario.
-            </div>
-            <script>
-                setTimeout(function () {
-                    window.location.href = 'http://localhost:8080/redirecionarMenu.jsp'; // Redireciona após 5 segundos
-                }, 5000);
-            </script>
-            <%}%>
-        </table>
-    </body>
+    </table>
+    <% } else { %>
+        <p>Usuário não está logado.</p>
+    <% } %>
+</body>
 </html>

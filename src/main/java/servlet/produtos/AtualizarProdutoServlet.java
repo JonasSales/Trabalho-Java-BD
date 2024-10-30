@@ -63,14 +63,13 @@ public class AtualizarProdutoServlet extends HttpServlet {
             out.println("<script>");
             out.println("setTimeout(function() {");
             out.println("window.location.href = localhost:8080/apresentacao.html"); // Substitua pela sua página principal
-            out.println("}, 5000);"); // Redireciona após 5 segundos
+            out.println("}, 2000);"); // Redireciona após 5 segundos
             out.println("</script>");
             out.println("</head>");
             out.println("<body>");
             
             if (inserido && log) {
                 out.println("<h1>Produto atualizado com sucesso!</h1>");
-                out.println("<p>Você será redirecionado para a página principal em 5 segundos...</p>");
             } else {
                 out.println("<h1>Id não achado dentro da tabela.</h1>");
                 out.println("<p>Por favor veja se existe este o id: " + geral.getId_produto() + " na tabela.</p>");

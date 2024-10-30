@@ -13,10 +13,12 @@
     <body>
         <h1>Logs</h1>
         <%
-            ArrayList<Log> logs = LogDAO.BuscarLog();
+            
             out.println("<table>");
             out.println("<tr><th>Data</th><th>Hora</th><th>Ação</th><th>Tabela</th><th>Id de quem alterou</th> <th>Tipo de usuario</th></tr>");
+            ArrayList<Log> logs = LogDAO.BuscarLog();
             session.setAttribute("logs", logs);
+            
         %>
         
         <form method="post" action="http://localhost:8080/arquivoLog" target="_blank">
