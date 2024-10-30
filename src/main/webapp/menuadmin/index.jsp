@@ -22,7 +22,7 @@
             if (usuarioLogado != null && usuarioLogado.getTipodeUsuario().equals(tipoUsuario)) {
         %>
         <header>
-            <h1>Menu Admin <br>Seja bem-vindo <%= usuarioLogado.getNome()%></h1>
+            <h1>Menu Admin <br>Seja bem-vindo, <%= usuarioLogado.getNome()%></h1>
             
         </header>
         <nav>

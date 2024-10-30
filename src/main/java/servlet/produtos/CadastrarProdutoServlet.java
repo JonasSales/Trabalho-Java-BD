@@ -36,7 +36,7 @@ public class CadastrarProdutoServlet extends HttpServlet {
         
         Produto geral = new Produto();
         
-        geral.setId_produto(Integer.parseInt(idProduto));
+        geral.setId_produto(Long.parseLong(idProduto));
         geral.setId_vendedor(Integer.parseInt(idVendedor));
         geral.setNome(nome);
         geral.setCategoria(categoria);

@@ -19,7 +19,7 @@ public class ProdutoDAO {
     private static final String SELECT_SQL = "SELECT * FROM vw_produtos_estoque WHERE ((CAST(id_produto AS TEXT) LIKE ? or nome_produto like ?) and (id_vendedor = ?) and (quantidade >= 0));";
     private static final String UPDATEPRODUTO_SQL = "UPDATE produtos SET nome_produto = ?, categoria= ?, marca= ?, publico = ? WHERE ((id_produto = ?) and (id_vendedor = ?))";
     private static final String UPDATEESTOQUE_SQL = "UPDATE estoque SET quantidade= ?, peso= ?, dimensoes= ?, preco= ? WHERE ((id_produto = ?) and (id_vendedor = ?))";
-    private static final String DELETE_SQL = "delete from produtos WHERE (id_produto= ?) and (id_vendedor = ?)";
+    private static final String DELETE_SQL = "delete from produtos WHERE id_produto = ?";
     private static final String BUSCARPRODUTO_SQL = "SELECT * from vw_produtos_estoque WHERE ((id_produto = ?) and (id_vendedor = ?))";
 
     public static void main(String[] args) {
@@ -159,7 +159,6 @@ public class ProdutoDAO {
 
             PreparedStatement stmt = c.prepareStatement(DELETE_SQL);
             stmt.setLong(1, produto.getId_produto());
-            stmt.setLong(2, produto.getId_vendedor());
 
             int rowsAffect = stmt.executeUpdate();
 

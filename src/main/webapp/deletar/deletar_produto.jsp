@@ -24,10 +24,10 @@
             boolean verificadorTres = usuarioLogado.getTipodeUsuario().equals("funcionario");
             if (verificadorUm || verificadorDois || verificadorTres) {%>
         <form action="http://localhost:8080/DeletarProdutoServlet" method="post">
-            <h2>Deletar</h2>
+            <h2>Deletar Produtos</h2>
             <label>ID:</label>
             <input type="number" id="id_produto" name="id_produto" required>
-            <input type="submit" value="Atualizar">
+            <input type="submit" value="Deletar">
         </form>
         <%}else {%>
         <div>

@@ -4,6 +4,7 @@ import bancodedados.Usuario;
 import bancodedados.Vendedor;
 import dao.LogDAO;
 import dao.UsuarioDAO;
+import dao.VendedorDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,20 +14,24 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.PrintWriter;
 
-@WebServlet(name="AtualizarVendedorServlet", urlPatterns={"/AtualizarVendedorServlet"})
+@WebServlet(name = "AtualizarVendedorServlet", urlPatterns = {"/AtualizarVendedorServlet"})
 public class AtualizarVendedorServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         request.getRequestDispatcher("atualizar/atualizar_vendedor.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        Usuario adminLogado = new Usuario();
-        
+            throws ServletException, IOException {
+
+        HttpSession session = request.getSession();
+        Usuario usuarioLogado = (Usuario) session.getAttribute("vendedor") != null
+                ? (Usuario) session.getAttribute("vendedor")
+                : (Usuario) session.getAttribute("admin");
+
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
         String nome = request.getParameter("nome");
@@ -35,18 +40,10 @@ public class AtualizarVendedorServlet extends HttpServlet {
         String cidade = request.getParameter("cidade");
         String estado = request.getParameter("estado");
         String admin = "admin";
-        
-        
-        HttpSession session = request.getSession();
-        Vendedor usuarioLogado = (Vendedor) session.getAttribute("vendedor");
+
         int id = 0;
-        if (usuarioLogado == null) {
-             id = Integer.parseInt(request.getParameter("id"));
-            adminLogado = (Usuario) session.getAttribute("admin");
-            
-        }
         Vendedor nUsuario = new Vendedor();
-        
+
         nUsuario.setId(id);
         nUsuario.setEmail(email);
         nUsuario.setSenha(senha);
@@ -57,23 +54,26 @@ public class AtualizarVendedorServlet extends HttpServlet {
         nUsuario.setEstado(estado);
         nUsuario.setTipodeUsuario("vendedor");
 
-        boolean inserido = false; 
+        boolean inserido = false;
+        boolean inserido2 = false;
         boolean log = false;
-        if (adminLogado.getTipodeUsuario().equals(admin)) {
+
+        if (usuarioLogado.getTipodeUsuario().equals(admin)) {
             nUsuario.setId(id);
             nUsuario.setTipodeUsuario("vendedor");
             inserido = UsuarioDAO.AtualizarUsuario(nUsuario);
-            log = LogDAO.inserirLog(adminLogado, "update", "vendedor");
-        }
-        else{
+            inserido2 = VendedorDAO.atualizarVendedor(nUsuario);
+            log = LogDAO.inserirLog(usuarioLogado, "update", "vendedor");
+        } else {
             nUsuario.setId(usuarioLogado.getId());
             nUsuario.setTipodeUsuario("vendedor");
             inserido = UsuarioDAO.AtualizarUsuario(nUsuario);
+            inserido2 = VendedorDAO.atualizarVendedor(nUsuario);
             log = LogDAO.inserirLog(nUsuario, "update", "vendedor");
         }
-        
+
         response.setContentType("text/html;charset=UTF-8"); // Definindo o tipo de conteúdo
-        
+
         try (PrintWriter out = response.getWriter()) {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -87,8 +87,8 @@ public class AtualizarVendedorServlet extends HttpServlet {
             out.println("</script>");
             out.println("</head>");
             out.println("<body>");
-            
-            if (inserido && log) {
+
+            if (inserido && inserido2 && log) {
                 out.println("<h1>Atualização realizada com sucesso!</h1>");
                 out.println("<p>Você será redirecionado para a página de login em 5 segundos...</p>");
             } else {

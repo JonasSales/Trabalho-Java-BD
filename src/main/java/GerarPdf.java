@@ -15,7 +15,7 @@ public class GerarPdf {
         
         try {
             // Definindo o caminho do arquivo de saída
-            String outputPath = "C:\\Users\\Jonas\\Documents\\NetBeansProjects\\trabalho\\Trabalho-Java\\src\\main\\webapp\\output.pdf";
+            String outputPath = "C:\\Users\\jocin\\OneDrive\\Documentos\\NetBeansProjects\\Trabalho-bd\\Trabalho-Java-BD\\src\\main\\webapp\\output.pdf";
             PdfWriter.getInstance(document, new FileOutputStream(outputPath));
             document.open();
 

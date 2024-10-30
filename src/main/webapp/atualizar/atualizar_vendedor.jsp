@@ -110,7 +110,7 @@
             <label>Email:</label>
             <input type="email" id="email" name="email" required value="<%= vendedorLogado.getEmail()%>">
             <label>Cidade</label>
-            <input type="text" id="cidade" name="cidade" required value="<%= vendedorLogado%>">
+            <input type="text" id="cidade" name="cidade" required value="<%= vendedorLogado.getCidade()%>">
             <label>CNPJ:</label>
             <input type="text" id="cnpj" name="cnpj" required value="<%= vendedorLogado.getCnpj()%>" oninput="mascaraCNPJ(this)" 
                    maxlength="18" pattern=".{18,18}">

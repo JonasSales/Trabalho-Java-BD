@@ -26,7 +26,7 @@ public class DeletarProdutoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         
-        int id_produto = Integer.parseInt(request.getParameter("id_produto"));
+        long id_produto = Long.parseLong(request.getParameter("id_produto"));
         
         
         Produto geral = new Produto();
